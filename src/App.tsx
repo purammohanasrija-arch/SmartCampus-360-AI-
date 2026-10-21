@@ -46,17 +46,27 @@ import { CampusCopilotModal } from './components/copilot/CampusCopilotModal';
 import { CommandPalette } from './components/common/CommandPalette';
 import { NotificationsDrawer } from './components/common/NotificationsDrawer';
 import { Interactive3DBackground } from './components/common/Interactive3DBackground';
+import {
+  INITIAL_USERS,
+  INITIAL_STUDENTS,
+  INITIAL_FACULTY,
+  INITIAL_DEPARTMENTS,
+  INITIAL_EARLY_WARNINGS,
+  INITIAL_FEES,
+  INITIAL_NOTIFICATIONS,
+  INITIAL_GAMIFICATION
+} from './data/mockData';
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [allRoles, setAllRoles] = useState<User[]>([]);
-  const [students, setStudents] = useState<Student[]>([]);
-  const [faculty, setFaculty] = useState<Faculty[]>([]);
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [warnings, setWarnings] = useState<EarlyWarningFlag[]>([]);
-  const [fees, setFees] = useState<FeeRecord[]>([]);
-  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
-  const [gamification, setGamification] = useState<GamificationProfile | null>(null);
+  const [currentUser, setCurrentUser] = useState<User>(() => INITIAL_USERS.find(u => u.role === 'admin') || INITIAL_USERS[0]);
+  const [allRoles, setAllRoles] = useState<User[]>(() => INITIAL_USERS);
+  const [students, setStudents] = useState<Student[]>(() => INITIAL_STUDENTS);
+  const [faculty, setFaculty] = useState<Faculty[]>(() => INITIAL_FACULTY);
+  const [departments, setDepartments] = useState<Department[]>(() => INITIAL_DEPARTMENTS);
+  const [warnings, setWarnings] = useState<EarlyWarningFlag[]>(() => INITIAL_EARLY_WARNINGS);
+  const [fees, setFees] = useState<FeeRecord[]>(() => INITIAL_FEES);
+  const [notifications, setNotifications] = useState<NotificationItem[]>(() => INITIAL_NOTIFICATIONS);
+  const [gamification, setGamification] = useState<GamificationProfile>(() => INITIAL_GAMIFICATION);
 
   const [activeModule, setActiveModule] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -103,7 +113,7 @@ export default function App() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
   const [theme, setTheme] = useState<'midnight' | 'dark' | 'light'>('midnight');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadAllInitialData();
@@ -111,7 +121,6 @@ export default function App() {
 
   const loadAllInitialData = async () => {
     try {
-      setIsLoading(true);
       const [
         userRes, 
         stuRes, 
@@ -132,17 +141,17 @@ export default function App() {
         apiClient.getGamification()
       ]);
 
-      setCurrentUser(userRes.user);
-      setAllRoles(userRes.allRoles);
-      setStudents(stuRes.students);
-      setFaculty(facRes.faculty);
-      setDepartments(deptRes.departments);
-      setWarnings(warnRes.warnings);
-      setFees(feeRes.fees);
-      setNotifications(notifRes.notifications);
-      setGamification(gameRes.gamification);
+      if (userRes?.user) setCurrentUser(userRes.user);
+      if (userRes?.allRoles) setAllRoles(userRes.allRoles);
+      if (stuRes?.students) setStudents(stuRes.students);
+      if (facRes?.faculty) setFaculty(facRes.faculty);
+      if (deptRes?.departments) setDepartments(deptRes.departments);
+      if (warnRes?.warnings) setWarnings(warnRes.warnings);
+      if (feeRes?.fees) setFees(feeRes.fees);
+      if (notifRes?.notifications) setNotifications(notifRes.notifications);
+      if (gameRes?.gamification) setGamification(gameRes.gamification);
     } catch (err) {
-      console.error('Failed to load initial campus data:', err);
+      console.warn('Backend sync notice (using client store):', err);
     } finally {
       setIsLoading(false);
     }
@@ -171,22 +180,8 @@ export default function App() {
     setNotifications(res.notifications);
   };
 
-  if (isLoading || !currentUser) {
-    return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-extrabold text-lg shadow-xl shadow-purple-600/40 animate-pulse">
-          360
-        </div>
-        <div className="text-center">
-          <h2 className="text-sm font-bold tracking-tight text-white">SmartCampus 360 AI</h2>
-          <p className="text-xs text-slate-400 mt-1 font-mono">Initializing High-Performance Academic Twin...</p>
-        </div>
-      </div>
-    );
-  }
-
   // Active student for student context (default to Aria Chen if student role or first student)
-  const currentStudent = students.find(s => s.studentId === currentUser.studentId) || students[0];
+  const currentStudent = students.find(s => s.studentId === currentUser.studentId) || students[0] || INITIAL_STUDENTS[0];
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row antialiased font-sans relative overflow-x-hidden">
