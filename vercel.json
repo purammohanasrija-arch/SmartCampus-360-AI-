@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build && cp public/preview.html dist/preview.html",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/preview", "destination": "/preview.html" },
+    { "source": "/cover", "destination": "/preview.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

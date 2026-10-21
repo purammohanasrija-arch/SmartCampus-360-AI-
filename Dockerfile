@@ -1,0 +1,30 @@
+# Stage 1: Build Application
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
+
+COPY . .
+RUN npm run build
+RUN cp public/preview.html dist/preview.html
+
+# Stage 2: Production Container
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/server.ts ./
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/tsconfig.json ./
+
+EXPOSE 3000
+
+CMD ["npx", "tsx", "server.ts"]

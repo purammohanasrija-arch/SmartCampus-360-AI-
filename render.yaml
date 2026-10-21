@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: smartcampus-360-ai
+    env: node
+    plan: free
+    buildCommand: npm install --legacy-peer-deps && npm run build && cp public/preview.html dist/preview.html
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GEMINI_API_KEY
+        sync: false

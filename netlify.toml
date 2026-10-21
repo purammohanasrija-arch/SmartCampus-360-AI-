@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build && cp public/preview.html dist/preview.html"
+  publish = "dist"
+
+[[redirects]]
+  from = "/cover"
+  to = "/preview.html"
+  status = 200
+
+[[redirects]]
+  from = "/preview"
+  to = "/preview.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
