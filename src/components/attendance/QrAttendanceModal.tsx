@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X, QrCode, Timer, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
+import { X, QrCode, Timer, CheckCircle2, ShieldCheck, AlertCircle, Copy, Check } from 'lucide-react';
 import { AttendanceSession, Student } from '../../types/campus';
 import { apiClient } from '../../services/apiClient';
+import { RealQrCode } from '../common/RealQrCode';
 
 interface QrAttendanceModalProps {
   session: AttendanceSession;
@@ -15,6 +16,7 @@ export function QrAttendanceModal({ session, currentStudent, isOpen, onClose, on
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes session timer
   const [verifyStatus, setVerifyStatus] = useState<'idle' | 'scanning' | 'success' | 'error'>('idle');
   const [feedbackMsg, setFeedbackMsg] = useState('');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -28,6 +30,10 @@ export function QrAttendanceModal({ session, currentStudent, isOpen, onClose, on
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
+
+  // Build authentic scannable QR verification URL
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://smartcampus.edu';
+  const qrVerificationUrl = `${origin}/?module=attendance&session=${encodeURIComponent(session.id)}&token=${encodeURIComponent(session.qrToken || 'LIVE-TOKEN')}&course=${encodeURIComponent(session.courseCode)}`;
 
   // Student test simulation: scan this QR code
   const handleSimulateStudentScan = async () => {
@@ -52,7 +58,7 @@ export function QrAttendanceModal({ session, currentStudent, isOpen, onClose, on
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-6 shadow-2xl text-center">
+      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl text-center">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2 text-left">
@@ -79,18 +85,51 @@ export function QrAttendanceModal({ session, currentStudent, isOpen, onClose, on
           </span>
         </div>
 
-        {/* QR Code Container with High Contrast & Subtle Scanline */}
-        <div className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-inner mx-auto w-56 h-56 relative overflow-hidden">
-          <QrCode className="w-44 h-44 text-slate-950" />
-          <div className="absolute inset-x-0 h-0.5 bg-purple-500 shadow-md shadow-purple-500 animate-scan pointer-events-none" />
+        {/* Authentic High-Resolution Scannable QR Code */}
+        <div className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-2xl mx-auto w-64 h-64 relative overflow-hidden border-4 border-purple-500/30 group">
+          <RealQrCode 
+            value={qrVerificationUrl} 
+            size={220} 
+            level="Q" 
+            showScanline={true} 
+            darkColor="#0f172a" 
+            lightColor="#ffffff" 
+            margin={1}
+          />
+          <div className="absolute bottom-1 inset-x-0 text-center pointer-events-none">
+            <span className="text-[9px] font-mono tracking-widest text-slate-500 bg-white/95 px-2 py-0.5 rounded-full shadow-sm font-semibold border border-slate-200">
+              SCANNABLE LIVE QR
+            </span>
+          </div>
         </div>
 
-        {/* Session Metadata */}
-        <div className="space-y-1 text-xs text-slate-400 font-mono">
-          <div>Room: <span className="text-white font-semibold">{session.room}</span> · Time: <span className="text-white font-semibold">{session.timeSlot}</span></div>
-          <div>Token: <span className="text-purple-300 font-bold">{session.qrToken}</span></div>
-          <p className="text-[10px] text-slate-500 pt-1">
-            Protected with cryptographically signed timestamp. One submission per authenticated student.
+        {/* Session Metadata & Copy Token Action */}
+        <div className="space-y-2 text-xs text-slate-400 font-mono text-left">
+          <div className="flex items-center justify-between px-3 py-2 bg-slate-950/80 rounded-xl border border-slate-800">
+            <div>
+              <span className="text-slate-500 text-[10px] block font-mono">CRYPTOGRAPHIC SESSION TOKEN</span>
+              <span className="text-purple-300 font-bold text-xs">{session.qrToken}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard?.writeText(session.qrToken || '');
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              title="Copy session token"
+              className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 text-[11px]"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-purple-400" />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
+            </button>
+          </div>
+          <div className="flex items-center justify-between text-[11px] px-1 text-slate-400">
+            <span>Room: <strong className="text-white">{session.room}</strong></span>
+            <span>Time Slot: <strong className="text-white">{session.timeSlot}</strong></span>
+          </div>
+          <p className="text-[10px] text-slate-500 text-center pt-0.5">
+            Point any phone camera or barcode scanner at the screen to record verified attendance.
           </p>
         </div>
 

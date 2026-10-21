@@ -2,6 +2,7 @@ import React from 'react';
 import { X, Printer, ShieldCheck, QrCode, Sparkles, Building2 } from 'lucide-react';
 import { Student } from '../../types/campus';
 import { TiltCard } from '../common/TiltCard';
+import { RealQrCode } from '../common/RealQrCode';
 
 interface DigitalIdCardModalProps {
   student: Student;
@@ -11,6 +12,9 @@ interface DigitalIdCardModalProps {
 
 export function DigitalIdCardModal({ student, isOpen, onClose }: DigitalIdCardModalProps) {
   if (!isOpen) return null;
+
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://smartcampus.edu';
+  const studentVerificationUrl = `${origin}/?verify=student&id=${encodeURIComponent(student.studentId)}&name=${encodeURIComponent(student.name)}&dept=${encodeURIComponent(student.department)}&roll=${encodeURIComponent(student.rollNo)}`;
 
   const handlePrint = () => {
     window.print();
@@ -98,11 +102,16 @@ export function DigitalIdCardModal({ student, isOpen, onClose }: DigitalIdCardMo
                 <span className="text-[9px] text-slate-500 block font-mono mt-0.5">3D Interactive Parallax Enabled</span>
               </div>
 
-              {/* QR Code Graphic representation */}
-              <div className="p-1.5 bg-white rounded-lg shadow-md shrink-0">
-                <div className="w-12 h-12 bg-slate-900 rounded flex items-center justify-center text-white">
-                  <QrCode className="w-10 h-10 text-white" />
-                </div>
+              {/* Authentic Scannable Student Security QR Code */}
+              <div className="p-1 bg-white rounded-lg shadow-md shrink-0 border border-purple-400/30 hover:scale-105 transition-transform" title="Authentic Scannable QR: Student Identity Credentials">
+                <RealQrCode 
+                  value={studentVerificationUrl}
+                  size={52}
+                  darkColor="#020617"
+                  lightColor="#ffffff"
+                  margin={1}
+                  level="M"
+                />
               </div>
             </div>
           </div>
