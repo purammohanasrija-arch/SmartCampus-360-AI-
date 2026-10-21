@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.45);
+}
+
+/* ==========================================================================
+   Subtle 3D Parallax Hover Effects & Depth Perception CSS Transforms
+   ========================================================================== */
+
+.parallax-card-3d {
+  transform: perspective(1200px) translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.24s ease;
+  will-change: transform, box-shadow;
+  position: relative;
+}
+
+.parallax-card-3d:hover {
+  transform: perspective(1200px) translateY(-5px) translateZ(14px) rotateX(2deg) rotateY(-1deg);
+  box-shadow: 0 24px 40px -10px rgba(0, 0, 0, 0.7), 
+              0 0 30px -4px rgba(139, 92, 246, 0.25);
+}
+
+/* Parallax Depth Layer 1 (Card Headers / Subtitles / Badges) */
+.parallax-card-3d .parallax-depth-1 {
+  transform: translateZ(0);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.parallax-card-3d:hover .parallax-depth-1 {
+  transform: translateZ(12px);
+}
+
+/* Parallax Depth Layer 2 (Metrics / Charts / Main Values) */
+.parallax-card-3d .parallax-depth-2 {
+  transform: translateZ(0);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.parallax-card-3d:hover .parallax-depth-2 {
+  transform: translateZ(24px);
+}
+
+/* Parallax Depth Layer 3 (Action Icons / Floating Badges / CTA Arrows) */
+.parallax-card-3d .parallax-depth-3 {
+  transform: translateZ(0);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.parallax-card-3d:hover .parallax-depth-3 {
+  transform: translateZ(34px) scale(1.06);
+}
+
+/* Subtle Parallax Variant for Micro-Cards & Quick Action Items */
+.parallax-card-subtle {
+  transform: perspective(1000px) translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease;
+  will-change: transform, box-shadow;
+}
+
+.parallax-card-subtle:hover {
+  transform: perspective(1000px) translateY(-3px) translateZ(10px) rotateX(1.5deg) rotateY(-0.8deg);
+  box-shadow: 0 16px 28px -6px rgba(0, 0, 0, 0.55), 
+              0 0 20px -4px rgba(139, 92, 246, 0.18);
+}
+
+.parallax-card-subtle .parallax-depth-1 {
+  transform: translateZ(0);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.parallax-card-subtle:hover .parallax-depth-1 {
+  transform: translateZ(8px);
+}
+
+.parallax-card-subtle .parallax-depth-2 {
+  transform: translateZ(0);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.parallax-card-subtle:hover .parallax-depth-2 {
+  transform: translateZ(18px);
+}
+
+.parallax-card-subtle .parallax-depth-3 {
+  transform: translateZ(0);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.parallax-card-subtle:hover .parallax-depth-3 {
+  transform: translateZ(26px) scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-card-3d,
+  .parallax-card-3d:hover,
+  .parallax-card-3d .parallax-depth-1,
+  .parallax-card-3d:hover .parallax-depth-1,
+  .parallax-card-3d .parallax-depth-2,
+  .parallax-card-3d:hover .parallax-depth-2,
+  .parallax-card-3d .parallax-depth-3,
+  .parallax-card-3d:hover .parallax-depth-3,
+  .parallax-card-subtle,
+  .parallax-card-subtle:hover,
+  .parallax-card-subtle .parallax-depth-1,
+  .parallax-card-subtle:hover .parallax-depth-1,
+  .parallax-card-subtle .parallax-depth-2,
+  .parallax-card-subtle:hover .parallax-depth-2,
+  .parallax-card-subtle .parallax-depth-3,
+  .parallax-card-subtle:hover .parallax-depth-3 {
+    transform: none !important;
+    transition: none !important;
+  }
+}

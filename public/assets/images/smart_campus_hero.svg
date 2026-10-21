@@ -1,0 +1,109 @@
+<!-- Refer to /public/smart_campus_hero.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050714" />
+      <stop offset="35%" stop-color="#0a0f2e" />
+      <stop offset="70%" stop-color="#140f38" />
+      <stop offset="100%" stop-color="#070919" />
+    </linearGradient>
+    <radialGradient id="nebulaPurple" cx="75%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
+      <stop offset="45%" stop-color="#6366f1" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="nebulaCyan" cx="25%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.25" />
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="groundGlow" cx="50%" cy="85%" r="60%">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.3" />
+      <stop offset="40%" stop-color="#0284c7" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="glassTowerA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#0f172a" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0.98" />
+    </linearGradient>
+    <linearGradient id="glassTowerB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#311042" stop-opacity="0.85" />
+      <stop offset="60%" stop-color="#130e26" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0.98" />
+    </linearGradient>
+    <linearGradient id="bridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.7" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="highGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#skyGrad)" />
+  <rect width="1600" height="900" fill="url(#nebulaPurple)" />
+  <rect width="1600" height="900" fill="url(#nebulaCyan)" />
+  <rect width="1600" height="900" fill="url(#groundGlow)" />
+  <g transform="translate(800, 260)" opacity="0.45" filter="url(#glow)">
+    <ellipse cx="0" cy="0" rx="420" ry="85" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-dasharray="8 6" transform="rotate(-12)" />
+    <ellipse cx="0" cy="0" rx="360" ry="70" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="5 5" transform="rotate(8)" />
+    <ellipse cx="0" cy="0" rx="280" ry="55" fill="none" stroke="#c084fc" stroke-width="1.4" transform="rotate(-4)" />
+    <circle cx="-280" cy="-20" r="4" fill="#38bdf8" />
+    <circle cx="270" cy="25" r="5" fill="#a855f7" />
+    <circle cx="140" cy="-50" r="3.5" fill="#34d399" />
+  </g>
+  <path d="M 0 540 L 800 420 L 1600 540 L 1600 900 L 0 900 Z" fill="#040714" opacity="0.85" />
+  <g stroke="#6366f1" stroke-width="0.8" opacity="0.25">
+    <line x1="800" y1="420" x2="0" y2="700" />
+    <line x1="800" y1="420" x2="400" y2="900" />
+    <line x1="800" y1="420" x2="800" y2="900" stroke="#a855f7" stroke-width="1.5" opacity="0.6" />
+    <line x1="800" y1="420" x2="1200" y2="900" />
+    <line x1="800" y1="420" x2="1600" y2="700" />
+  </g>
+  <!-- Towers -->
+  <g transform="translate(180, 240)">
+    <polygon points="60,110 200,40 280,85 280,480 60,480" fill="url(#glassTowerA)" stroke="#6366f1" stroke-width="2" />
+    <line x1="200" y1="40" x2="200" y2="-40" stroke="#c084fc" stroke-width="2.5" />
+    <circle cx="200" cy="-40" r="5" fill="#ec4899" filter="url(#highGlow)" />
+    <rect x="80" y="175" width="28" height="18" fill="#38bdf8" opacity="0.8" rx="2" filter="url(#glow)" />
+    <rect x="140" y="225" width="34" height="18" fill="#a855f7" opacity="0.85" rx="2" filter="url(#glow)" />
+  </g>
+  <g transform="translate(620, 180)">
+    <path d="M 0 350 Q 180 120 360 350 Z" fill="none" stroke="#38bdf8" stroke-width="2.5" opacity="0.8" filter="url(#glow)" />
+    <path d="M 40 350 Q 180 160 320 350 Z" fill="#1e1b4b" fill-opacity="0.35" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6 4" />
+    <ellipse cx="180" cy="350" rx="180" ry="40" fill="#0f172a" stroke="#6366f1" stroke-width="2" />
+    <line x1="180" y1="135" x2="180" y2="0" stroke="#38bdf8" stroke-width="3" filter="url(#highGlow)" />
+    <g transform="translate(180, -20)" filter="url(#highGlow)">
+      <polygon points="0,-45 39,-22 39,22 0,45 -39,22 -39,-22" fill="#0c1229" fill-opacity="0.8" stroke="#38bdf8" stroke-width="2" />
+      <circle cx="0" cy="0" r="22" fill="#7c3aed" fill-opacity="0.7" stroke="#e0e7ff" stroke-width="1.5" />
+      <text x="0" y="6" text-anchor="middle" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900">360</text>
+    </g>
+  </g>
+  <g transform="translate(1080, 210)">
+    <polygon points="40,90 170,20 260,70 260,510 40,510" fill="url(#glassTowerB)" stroke="#c084fc" stroke-width="2" />
+    <line x1="170" y1="20" x2="170" y2="-55" stroke="#38bdf8" stroke-width="2.5" />
+    <circle cx="170" cy="-55" r="5" fill="#38bdf8" filter="url(#highGlow)" />
+    <rect x="60" y="150" width="35" height="22" fill="#c084fc" opacity="0.85" rx="3" filter="url(#glow)" />
+    <rect x="110" y="200" width="45" height="20" fill="#38bdf8" opacity="0.8" rx="3" filter="url(#glow)" />
+  </g>
+  <polygon points="460,400 620,440 620,465 460,425" fill="#1e1b4b" fill-opacity="0.8" stroke="url(#bridgeGrad)" stroke-width="2" filter="url(#glow)" />
+  <polygon points="980,440 1120,405 1120,430 980,465" fill="#1e1b4b" fill-opacity="0.8" stroke="url(#bridgeGrad)" stroke-width="2" filter="url(#glow)" />
+  <!-- Wayfinding -->
+  <g transform="translate(800, 680)" filter="url(#highGlow)">
+    <polygon points="0,-30 25,-15 25,15 0,30 -25,15 -25,-15" fill="#090d24" fill-opacity="0.9" stroke="#38bdf8" stroke-width="2" />
+    <circle cx="0" cy="0" r="12" fill="#6366f1" fill-opacity="0.6" stroke="#a5b4fc" stroke-width="1.2" />
+    <ellipse cx="0" cy="45" rx="75" ry="18" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.85" />
+  </g>
+</svg>

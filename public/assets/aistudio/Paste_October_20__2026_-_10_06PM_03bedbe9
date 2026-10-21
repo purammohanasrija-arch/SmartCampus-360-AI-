@@ -1,0 +1,979 @@
+# SMARTCAMPUS 360 AI
+## COMPLETE FULL-STACK STUDENT MANAGEMENT SYSTEM — MASTER IMPLEMENTATION PROMPT
+
+Act as a world-class full-stack software architect, senior React developer, UI/UX designer, AI engineer, 3D visualization specialist, database engineer, cybersecurity specialist and QA automation engineer.
+
+Your mission is to transform my existing Student Management System into **SmartCampus 360 AI**, an advanced, futuristic, highly interactive, AI-powered university management platform with premium design, meaningful animations, advanced analytics, real-time workflows and comprehensive functionality.
+
+This is a complete implementation task, not a request for a design proposal or static prototype.
+
+**First inspect the existing codebase, preserve working features, and then implement, integrate, test and refine the complete application. Do not unnecessarily replace the existing project architecture.**
+
+---
+
+# 1. PRODUCT VISION
+
+Build a centralized digital university ecosystem that connects students, faculty, administrators, parents, librarians and placement officers.
+
+The application must provide:
+
+- A premium, visually impressive interface.
+- Complete role-specific portals.
+- Functional frontend and backend integration.
+- Persistent database storage.
+- Advanced academic analytics and interactive charts.
+- AI-powered academic assistance.
+- Real-time campus notifications.
+- An interactive 3D digital campus.
+- A student engagement and gamification system.
+- An academic what-if simulation laboratory.
+- Secure authentication and role-based authorization.
+- Downloadable reports and digital student IDs.
+- Responsive layouts and accessible interactions.
+
+Every feature must have a defined purpose and working behavior. Prioritize functional depth over decorative elements.
+
+# 2. INITIAL PROJECT INSPECTION
+
+Before changing any files:
+
+1. Inspect the repository structure and existing application.
+2. Identify the frontend framework, backend framework, database and current routes.
+3. Review package files, environment variables, API endpoints and existing components.
+4. Identify working functionality and incomplete or broken features.
+5. Reuse existing dependencies when suitable.
+6. Establish a clear implementation plan.
+7. Implement changes incrementally and test each major module.
+
+Preserve useful existing code and data. Do not delete working features simply to achieve a new visual design.
+
+If a capability is unavailable because an API key, external service or asset is missing, implement the integration structure and a clearly labeled setup state.
+
+# 3. PREMIUM VISUAL DESIGN SYSTEM
+
+Create a distinctive, high-end university SaaS interface.
+
+## Color system
+
+Use:
+- Deep violet and purple as primary colors.
+- Emerald and mint for success and positive progress.
+- Warm white and soft lavender for light surfaces.
+- Midnight purple for dark surfaces.
+- Amber for warnings.
+- Coral or red for critical errors.
+
+Avoid excessive saturation, poor contrast and overwhelming neon effects.
+
+## Visual effects
+
+Implement:
+- Glassmorphism cards with controlled transparency and backdrop blur.
+- Layered gradients and subtle aurora backgrounds.
+- Ambient glow around selected elements.
+- Animated background particles used sparingly.
+- Smooth page transitions.
+- Staggered card entrances.
+- Subtle 3D tilt on suitable cards.
+- Perspective transforms on interactive previews.
+- Soft shadows and elevation on hover.
+- Animated progress bars and circular gauges.
+- Number count-up effects for dashboard metrics.
+- Chart transitions when data changes.
+- Ripple and press feedback on buttons.
+- Skeleton loading states.
+- Animated modal and drawer transitions.
+- Elegant tooltips and contextual popovers.
+- Success animations and milestone celebrations.
+
+Use CSS transforms and opacity for performant animation. Avoid expensive continuous effects on large portions of the page.
+
+Respect reduced-motion preferences and support keyboard navigation.
+
+## Layout
+
+Create:
+- Collapsible sidebar.
+- Top navigation bar.
+- Global search.
+- Breadcrumbs.
+- Notification center.
+- Profile menu.
+- Responsive dashboard grid.
+- Reusable cards, tables, charts, dialogs and forms.
+- Persistent theme selection.
+- Mobile-friendly navigation.
+
+Provide light, dark and midnight-purple themes.
+
+# 4. ROLE-BASED AUTHENTICATION AND PORTALS
+
+Implement the following roles:
+
+## Super Administrator
+- Manage institutions and system-wide settings.
+- Manage user accounts and permissions.
+- View authorized system-wide analytics.
+- Review audit logs.
+- Configure academic years, departments and policies.
+- Manage notification and integration settings.
+
+## College Administrator
+- Manage student admissions.
+- Manage faculty, courses, departments and classrooms.
+- Configure examinations and attendance policies.
+- Manage fees, scholarships and reports.
+- Review complaints and approve administrative requests.
+- Monitor academic and operational analytics.
+
+## Faculty
+- View assigned classes and subjects.
+- Mark and correct attendance with audit history.
+- Create assignments and examinations.
+- Record marks and provide feedback.
+- Upload learning materials.
+- Review class performance.
+- Identify students who may need additional support.
+
+## Student
+- View personal profile and digital ID.
+- Track attendance, grades, CGPA and academic history.
+- Access timetable and examination schedules.
+- Submit assignments.
+- View feedback and learning resources.
+- Track fees and scholarships.
+- Receive notifications.
+- Use the AI study assistant.
+- Participate in challenges and track achievements.
+
+## Parent or Guardian
+- Access only authorized linked student records.
+- Review attendance, academic results and announcements.
+- View permitted fee information.
+- Receive relevant reminders.
+- Communicate through approved school channels.
+
+## Librarian
+- Manage books and inventory.
+- Issue and return books.
+- Process reservations.
+- Track overdue items.
+- Generate library usage reports.
+
+## Placement Officer
+- Manage placement drives and companies.
+- Track eligibility and applications.
+- Manage student resumes and skill profiles.
+- Record interview and placement outcomes.
+- Generate placement reports.
+
+Implement backend authorization for every protected endpoint. Frontend navigation restrictions alone are not sufficient.
+
+Use secure password hashing, validated sessions or tokens, logout and token revocation where appropriate, rate limiting, secure cookie settings where applicable, and optional OTP-based multi-factor authentication.
+
+# 5. ADMIN DASHBOARD
+
+Build an interactive command center with:
+
+- Total students.
+- Active faculty.
+- Department count.
+- Overall attendance.
+- Average academic performance.
+- Fee collection and pending dues.
+- Active courses.
+- Upcoming examinations.
+- Assignment completion.
+- Admission trends.
+- Placement statistics.
+- Recent activity.
+- High-priority alerts.
+
+Each KPI card must support appropriate click-through navigation.
+
+Examples:
+- Clicking Total Students opens the student directory.
+- Clicking attendance opens the attendance analytics page.
+- Clicking pending dues opens authorized fee records.
+- Clicking an upcoming examination opens its schedule.
+- Clicking an alert opens the relevant workflow.
+
+Add date-range selectors, academic-year filters, semester filters and department filters.
+
+All metrics must derive from real stored records or clearly labeled synthetic demo data.
+
+# 6. COMPLETE STUDENT MANAGEMENT
+
+Create a searchable student directory with:
+
+- Unique student ID.
+- Full name.
+- Profile photograph or avatar.
+- Email and phone.
+- Department.
+- Course and year.
+- Semester.
+- Section.
+- Roll number.
+- Admission date.
+- Guardian information with appropriate access restrictions.
+- Address and emergency contact where necessary.
+- Academic status.
+- Attendance and academic summaries.
+
+Features:
+- Create, edit, view and archive student records.
+- Paginated and sortable tables.
+- Search by student ID, name, department and other permitted fields.
+- Multi-filter support.
+- Bulk import from CSV.
+- Validation and duplicate detection.
+- Bulk export of authorized records.
+- Student profile drawer or detail page.
+- Academic history timeline.
+- Document uploads with access controls.
+- QR-based digital student ID.
+- Downloadable profile and academic reports.
+- Confirmation dialogs for destructive actions.
+- Audit trails for sensitive changes.
+
+Generate unique student IDs safely on the backend.
+
+# 7. FACULTY, COURSES AND DEPARTMENTS
+
+Implement:
+- Faculty profiles and department assignments.
+- Course and subject management.
+- Subject-to-faculty assignments.
+- Academic year and semester configuration.
+- Section and class management.
+- Classroom and laboratory records.
+- Faculty workload summaries.
+- Course enrollment management.
+- Student-to-course mapping.
+- Department-level reporting.
+
+Prevent invalid assignments and conflicting schedules.
+
+# 8. ATTENDANCE MANAGEMENT
+
+Build a comprehensive attendance module.
+
+Include:
+- Attendance marking by class, subject and session.
+- Individual and bulk attendance entry.
+- Present, absent, late and approved leave statuses.
+- Correction requests and approval workflows.
+- Attendance history.
+- Student-level attendance analytics.
+- Subject-wise and department-wise reports.
+- Configurable attendance thresholds.
+- Notifications for attendance shortages.
+- Downloadable attendance sheets.
+- Attendance calendar heatmaps.
+- Attendance trends and comparison charts.
+
+## QR attendance
+
+Generate session-specific QR codes that:
+- Identify the relevant class session.
+- Expire according to configurable rules.
+- Validate authenticated users.
+- Prevent duplicate attendance submissions.
+- Reject invalid or expired codes.
+- Store timestamps and session references.
+- Record suspicious or failed attempts for authorized review.
+
+Do not treat a QR scan alone as proof of physical presence. Support additional verification when required.
+
+All attendance corrections must preserve an audit trail.
+
+# 9. EXAMINATIONS AND RESULTS
+
+Implement:
+- Examination creation.
+- Examination schedules.
+- Subject-wise marks entry.
+- Internal and external assessment records.
+- Configurable grading rules.
+- GPA and CGPA calculations according to institution-defined rules.
+- Grade distribution.
+- Student performance trends.
+- Class averages.
+- Top-performing and improvement categories.
+- Semester comparisons.
+- Result publication workflows.
+- Result correction requests.
+- Downloadable report cards.
+- Faculty feedback.
+- Student-level academic history.
+
+Validate marks against configured maximum scores.
+
+Do not assume a universal GPA formula. Make the grading and credit-weighting rules configurable and test their calculations.
+
+# 10. ASSIGNMENTS AND LEARNING MANAGEMENT
+
+Create an interactive learning module with:
+
+- Assignment creation.
+- Instructions, attachments and due dates.
+- Student submissions.
+- Submission timestamps.
+- Late submission tracking.
+- Rubrics and marks.
+- Faculty feedback.
+- Resubmission rules.
+- Assignment completion dashboards.
+- Upcoming deadline calendars.
+- Learning materials and notes.
+- Searchable resources.
+- Quiz creation with validated scoring.
+- Study progress tracking.
+
+Display deadline countdowns and reminder notifications.
+
+Protect uploaded files and validate file types, file sizes and permissions.
+
+# 11. TIMETABLE AND EXAM SCHEDULER
+
+Implement:
+- Weekly and monthly calendar views.
+- Class schedules.
+- Examination timetables.
+- Faculty schedules.
+- Room and laboratory allocations.
+- Event creation and editing.
+- Drag-and-drop scheduling where feasible.
+- Conflict detection.
+- Faculty availability checks.
+- Classroom capacity checks.
+- Student schedule views.
+- Schedule export to PDF or calendar format.
+
+Prevent conflicting room, faculty and class assignments.
+
+Display meaningful conflict messages and suggest available alternatives where possible.
+
+# 12. FEES, SCHOLARSHIPS AND FINANCIAL RECORDS
+
+Include:
+- Configurable fee structures.
+- Student-specific fee obligations.
+- Semester-wise fee records.
+- Payment history.
+- Outstanding balances.
+- Scholarships and eligibility.
+- Installment schedules.
+- Receipts and invoices.
+- Overdue reminders.
+- Collection analytics.
+- Department and semester filters.
+- Exportable financial reports.
+
+Use a payment gateway only when properly configured.
+
+Never display a payment as successful based solely on a frontend message. Verify payment results server-side using the provider's supported verification process.
+
+Protect financial data through record-level permissions.
+
+# 13. DIGITAL LIBRARY
+
+Implement:
+- Book inventory.
+- ISBN and category search.
+- Author and publisher details.
+- Available and borrowed quantities.
+- Issue and return workflows.
+- Reservation queues.
+- Due-date tracking.
+- Overdue notifications.
+- Borrowing history.
+- Fine calculation if configured.
+- Popular books analytics.
+- Library usage charts.
+
+Enforce borrowing rules and inventory consistency on the backend.
+
+# 14. PLACEMENT AND CAREER DEVELOPMENT
+
+Create a dedicated placement portal with:
+- Student skill profiles.
+- Resume upload and download.
+- Internship listings.
+- Company profiles.
+- Placement drives.
+- Eligibility rules.
+- Application tracking.
+- Interview schedules.
+- Interview feedback.
+- Offer and placement records.
+- Placement statistics.
+- Skill development progress.
+- Coding and certification milestones.
+
+Restrict placement information according to user permissions.
+
+# 15. AI CAMPUS COPILOT
+
+Build a polished conversational assistant with:
+- Chat history.
+- Suggested questions.
+- Streaming responses where supported.
+- Typing indicators.
+- Message feedback.
+- Clear conversation controls.
+- Source references for document-based answers.
+- Contextual assistance based on the current portal.
+
+Example questions:
+- "Explain my attendance report."
+- "Which assignments are due this week?"
+- "Create a revision plan for my upcoming exams."
+- "Summarize my semester performance."
+- "Show the attendance policy."
+- "How do I apply for a scholarship?"
+
+Use an external AI provider through a secure backend integration.
+
+Provide:
+- Environment-variable configuration.
+- Request timeouts.
+- Rate limits.
+- Error handling.
+- Retry behavior where appropriate.
+- A helpful fallback if the provider is unavailable.
+
+Use approved university documents for policy answers and provide citations or source names when available.
+
+The assistant must only access information the current user is authorized to see.
+
+Do not expose API keys, private records or hidden system data in prompts or browser code.
+
+Require explicit confirmation and authorization before any sensitive action. Never let the assistant independently alter official marks, attendance, fee records or account permissions.
+
+# 16. ACADEMIC EARLY-WARNING INTELLIGENCE
+
+Build an explainable academic support module that identifies potential difficulties using transparent rules or a validated predictive model.
+
+Consider:
+- Attendance below a configurable threshold.
+- Declining assessment results.
+- Missing assignments.
+- Repeated missed deadlines.
+- Changes in academic progress.
+
+For each flag, show:
+- The factors responsible.
+- Relevant historical observations.
+- A recommended support action.
+- A review status.
+- Assigned staff member if applicable.
+- The date the flag was generated.
+
+Include:
+- Risk trend visualizations.
+- Student progress timelines.
+- Faculty intervention notes.
+- Follow-up reminders.
+- Reviewed, open and resolved statuses.
+
+Use neutral language and treat every flag as advisory. Do not automatically penalize students or make consequential decisions based solely on predictions.
+
+# 17. INTERACTIVE 3D DIGITAL CAMPUS
+
+Build an optional, premium 3D campus explorer using Three.js or React Three Fiber if compatible with the project.
+
+Include:
+- Campus buildings and connecting roads.
+- Classrooms, laboratories, library and sports facilities.
+- Orbit, zoom, pan and reset-camera controls.
+- Searchable locations.
+- Clickable buildings.
+- Information panels.
+- Facility categories.
+- Room schedules.
+- Availability indicators.
+- Animated navigation markers.
+- Day/night lighting.
+- A compact minimap.
+- A 2D accessible fallback.
+
+When a building is selected, display:
+- Building name.
+- Facilities.
+- Room directory.
+- Scheduled classes.
+- Accessible occupancy or availability data.
+- Relevant announcements.
+
+Connect the interface to stored data. Label unavailable or simulated occupancy explicitly.
+
+Use lazy loading, optimized geometry and lightweight effects. The main application must remain usable if 3D assets fail to load.
+
+# 18. STUDENT GAMIFICATION SYSTEM
+
+Build an optional engagement system with:
+- Experience points.
+- Levels.
+- Achievement badges.
+- Learning quests.
+- Weekly goals.
+- Assignment completion milestones.
+- Revision streaks.
+- Personal progress maps.
+- Opt-in leaderboards.
+- Achievement history.
+- Celebration animations.
+
+Award points only through validated server-side events.
+
+Prevent duplicate awards, manipulated scores and unauthorized point changes.
+
+Use meaningful achievements such as:
+- Completed a learning module.
+- Submitted assignments on time.
+- Reached a personal study goal.
+- Improved assessment performance.
+- Completed a revision plan.
+
+Do not encourage unhealthy attendance practices or public disclosure of sensitive academic information.
+
+# 19. ACADEMIC WHAT-IF SIMULATION LAB
+
+Build a separate interactive simulation workspace.
+
+Provide sliders and controls for:
+- Hypothetical attendance percentage.
+- Internal assessment marks.
+- Assignment completion.
+- Study hours.
+- Expected examination marks.
+
+Show:
+- Baseline and alternative scenarios.
+- Animated progress indicators.
+- Subject-wise comparisons.
+- Projected outcomes based on transparent formulas.
+- Suggested study priorities.
+- Reset controls.
+- Named scenario saving.
+- Scenario comparison charts.
+
+Update results instantly when a slider changes.
+
+Clearly label every projection as a simulation. Never overwrite official academic records during a simulation.
+
+Use institution-configured grading rules for calculations and explain all formulas.
+
+# 20. ADVANCED DATA VISUALIZATION CENTER
+
+Use Recharts or another compatible charting library.
+
+Build:
+- Bar charts for department comparisons.
+- Line charts for attendance and academic trends.
+- Donut charts for enrollment distribution.
+- Radar charts for multi-dimensional performance.
+- Circular gauges for progress.
+- Calendar heatmaps for attendance.
+- Histograms for mark distributions.
+- Fee collection charts.
+- Admission trend charts.
+- Assignment completion charts.
+- Placement analytics.
+- Interactive student comparison views.
+
+Required interactions:
+- Tooltips.
+- Clickable chart elements.
+- Legends and series visibility controls.
+- Date filters.
+- Department filters.
+- Semester filters.
+- Data drill-downs.
+- Loading and empty states.
+- Export actions.
+- Responsive resizing.
+
+Charts must update from application state and backend data. Do not use fabricated numbers as live production statistics.
+
+# 21. GLOBAL COMMAND PALETTE AND SMART SEARCH
+
+Implement a command palette activated by Ctrl+K or Command+K.
+
+Support commands such as:
+- Search for a student.
+- Open attendance.
+- Navigate to examinations.
+- Create an assignment.
+- Open notifications.
+- Generate a report.
+- Open system settings.
+- View the current timetable.
+
+Filter available commands according to the user's permissions.
+
+Use keyboard navigation, clear focus indicators and a search-results panel.
+
+Require confirmation for destructive or sensitive operations.
+
+# 22. REAL-TIME NOTIFICATIONS
+
+Use Socket.IO or the existing real-time technology.
+
+Support:
+- New announcements.
+- Examination schedule changes.
+- Published results.
+- Assignment deadlines.
+- Attendance warnings.
+- Fee reminders.
+- Complaint updates.
+- Library due dates.
+- Placement notifications.
+
+Implement:
+- Persistent notifications.
+- Read/unread states.
+- Notification categories.
+- Priority levels.
+- User preferences.
+- Relevant action links.
+- Duplicate prevention.
+- Connection and reconnection handling.
+
+Send notifications only to authorized recipients. Do not expose private data through broadcast events.
+
+Use email, SMS or WhatsApp only when the corresponding provider is configured and the appropriate consent and delivery rules are satisfied.
+
+# 23. COMMUNICATION AND SUPPORT CENTER
+
+Implement:
+- Announcements.
+- Department notices.
+- Student feedback.
+- Complaint tickets.
+- Support conversations.
+- Ticket assignment.
+- Status changes.
+- Internal staff notes with access controls.
+- Resolution summaries.
+- Feedback after resolution.
+- Notification integration.
+- Ticket volume analytics.
+
+Provide clear status tracking from submission through resolution.
+
+# 24. DIGITAL IDENTITY AND DOCUMENTS
+
+Create digital student and faculty ID cards with:
+- Institution logo.
+- Profile image.
+- Name and unique ID.
+- Department and course.
+- Academic year.
+- QR code for authorized verification.
+- Downloadable printable format.
+
+Use signed, revocable verification tokens or opaque identifiers. Do not encode private personal information directly into publicly scannable QR codes.
+
+Include protected document uploads, preview and download permissions.
+
+# 25. GLOBAL INTERACTION DESIGN
+
+Implement consistent interactions across all modules.
+
+Buttons:
+- Visible hover and pressed states.
+- Disabled states.
+- Loading states for async operations.
+- Clear success and error feedback.
+
+Forms:
+- Inline validation.
+- Required-field indicators.
+- Useful validation messages.
+- Duplicate detection.
+- Unsaved-change warnings.
+- Submission progress.
+
+Tables:
+- Search.
+- Sorting.
+- Filtering.
+- Pagination.
+- Column selection.
+- Bulk actions.
+- Export.
+- Empty states.
+
+Dialogs:
+- Accessible focus management.
+- Escape-key handling where appropriate.
+- Confirmation for destructive actions.
+- Clear cancellation paths.
+
+Navigation:
+- Active-route highlighting.
+- Breadcrumbs.
+- Global search.
+- Responsive sidebar.
+- Helpful page titles.
+
+Do not use inert buttons, fake success messages, dead links or controls that only animate without performing their advertised action.
+
+# 26. DATABASE AND BACKEND ARCHITECTURE
+
+Use the existing backend and database if they are already working. Otherwise, a suitable default stack is React + Vite, Node.js + Express and MongoDB.
+
+Create appropriate data models for:
+- Users.
+- Students.
+- Guardians.
+- Faculty.
+- Departments.
+- Courses.
+- Subjects.
+- Enrollments.
+- AttendanceSessions.
+- AttendanceRecords.
+- Examinations.
+- Results.
+- Assignments.
+- Submissions.
+- Timetables.
+- Classrooms.
+- Fees.
+- Payments.
+- Scholarships.
+- Books.
+- BorrowRecords.
+- Notifications.
+- Announcements.
+- Complaints.
+- PlacementDrives.
+- Applications.
+- Achievements.
+- AuditLogs.
+
+Define indexes, uniqueness constraints, validation rules and consistent relationships.
+
+Implement:
+- Modular API routes.
+- Controllers and services.
+- Authentication and authorization middleware.
+- Input validation.
+- Pagination.
+- Consistent error responses.
+- Centralized error handling.
+- Logging.
+- Environment-based configuration.
+- Database migrations or seed procedures as appropriate.
+
+Use transactions or other suitable consistency controls for multi-step financial and academic operations where supported.
+
+Keep business rules in the backend rather than relying on frontend calculations.
+
+# 27. SECURITY AND PRIVACY
+
+Implement:
+- Secure password hashing.
+- Server-side authorization.
+- Record-level access checks.
+- Input validation and sanitization.
+- Rate limiting.
+- Secure token handling.
+- CSRF protection where applicable.
+- Secure HTTP headers.
+- Protected document access.
+- Safe file-upload validation.
+- Environment variables for secrets.
+- Audit logging.
+- Login and account recovery protections.
+- Safe error messages.
+- Data minimization.
+
+Never commit real secrets to source control.
+
+Do not expose student contact information, grades, financial details or documents to unauthorized users.
+
+Use synthetic records in demo mode.
+
+# 28. PERFORMANCE AND ACCESSIBILITY
+
+Optimize:
+- Lazy-loaded modules.
+- 3D assets.
+- Images.
+- Large tables.
+- API requests.
+- Chart rendering.
+- Animation workloads.
+- Bundle size.
+- Search queries.
+
+Implement:
+- Responsive design.
+- Keyboard navigation.
+- Screen-reader labels.
+- Accessible forms.
+- Clear focus states.
+- Reduced-motion support.
+- Suitable contrast.
+- Loading, error and empty states.
+
+Ensure the core application remains usable on ordinary student laptops and mobile devices.
+
+# 29. DEMO MODE AND SAMPLE DATA
+
+Create a clearly labeled demo mode containing synthetic university data.
+
+Provide realistic sample records for:
+- Students.
+- Faculty.
+- Departments.
+- Attendance.
+- Examination results.
+- Assignments.
+- Timetables.
+- Fees.
+- Library books.
+- Placement drives.
+- Notifications.
+
+Create a seed script that is safe to run repeatedly without duplicating records.
+
+Keep demonstration credentials clearly documented and restricted to local development. Never deploy public administrative demo credentials to production.
+
+Include a visible demo-mode indicator whenever synthetic data is being displayed.
+
+# 30. TESTING AND QUALITY ASSURANCE
+
+After implementation, verify the following.
+
+## Authentication
+- Login and logout.
+- Invalid credentials.
+- Protected routes.
+- Role-based access.
+- Unauthorized API requests.
+- Session expiration and recovery.
+
+## Student management
+- Create, edit, view and archive.
+- Search and filtering.
+- Duplicate detection.
+- Pagination.
+- Import and export.
+
+## Academic workflows
+- Attendance recording.
+- Attendance correction approval.
+- Marks validation.
+- Grade calculation.
+- Result publication.
+- Assignment submission.
+- Timetable conflict detection.
+
+## Other workflows
+- Fee records.
+- Library issue and return.
+- Placement applications.
+- Notification persistence.
+- AI assistant fallback.
+- 3D explorer fallback.
+- Simulation scenario isolation.
+
+## UI and performance
+- Responsive layouts.
+- Navigation.
+- Form validation.
+- Chart interactions.
+- Animation behavior.
+- Accessibility.
+- Console and runtime errors.
+
+Use appropriate unit, integration and end-to-end tests for critical functionality.
+
+Fix the issues discovered during testing rather than merely reporting them.
+
+# 31. DEPLOYMENT AND DOCUMENTATION
+
+Provide:
+- A complete README.
+- Installation instructions.
+- Required software versions.
+- Dependency installation commands.
+- Environment variable documentation.
+- Database configuration.
+- Database seed commands.
+- Frontend startup commands.
+- Backend startup commands.
+- Testing commands.
+- Build commands.
+- Deployment instructions.
+- Troubleshooting instructions.
+- API endpoint documentation.
+
+Prepare a safe example environment file without real credentials.
+
+Support deployment using appropriate frontend, backend and database hosting services. Keep development and production configuration separate.
+
+Do not claim deployment is complete unless it has actually been performed and verified.
+
+# 32. IMPLEMENTATION STRATEGY
+
+Work in the following order:
+
+Phase 1: Inspect the existing codebase and create an implementation plan.
+
+Phase 2: Establish the design system, responsive navigation and authentication.
+
+Phase 3: Implement student, faculty, course and department management.
+
+Phase 4: Implement attendance, examinations, assignments and timetables.
+
+Phase 5: Implement fees, scholarships, library and placement modules.
+
+Phase 6: Build dynamic dashboards and advanced visualizations.
+
+Phase 7: Implement real-time notifications and the support center.
+
+Phase 8: Add the AI academic copilot and explainable early-warning module.
+
+Phase 9: Add gamification, the academic simulation lab and the 3D campus explorer.
+
+Phase 10: Complete security checks, automated tests, performance optimization and documentation.
+
+After each phase:
+- Run the application.
+- Check compilation and runtime errors.
+- Test important workflows.
+- Verify API and database integration.
+- Fix regressions before continuing.
+
+If the entire task cannot fit into one implementation pass, prioritize a complete, working core system first and continue with the remaining modules without destroying existing progress.
+
+# 33. FINAL ACCEPTANCE CRITERIA
+
+The finished application must:
+- Run locally using documented commands.
+- Have a consistent, polished visual identity.
+- Support all implemented user roles.
+- Enforce permissions on the backend.
+- Persist records in the configured database.
+- Provide working CRUD workflows.
+- Include interactive analytics driven by application data.
+- Have functional search, filters and navigation.
+- Provide meaningful notifications and error handling.
+- Offer a usable AI integration or clearly labeled setup fallback.
+- Include an optional 3D campus experience with a 2D fallback.
+- Include a safe what-if simulation.
+- Include responsive layouts and accessibility support.
+- Pass the critical workflow tests.
+- Include setup and deployment documentation.
+
+**FINAL INSTRUCTION:** Begin inspecting the existing repository now. Then implement the application in the codebase, connect the frontend, backend and database, run the application, test the critical workflows, fix errors and document any remaining external configuration requirements.
+
+Do not stop after creating a plan. Do not deliver only a screenshot or static mockup. Build the most complete, interactive, maintainable and visually impressive version that can be implemented reliably in the existing project.

@@ -1,0 +1,6 @@
+{
+  "name": "SmartCampus 360 AI",
+  "description": "Next-generation full-stack university management platform with role-based portals, academic analytics, AI copilot, 3D digital campus, and what-if simulation lab.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

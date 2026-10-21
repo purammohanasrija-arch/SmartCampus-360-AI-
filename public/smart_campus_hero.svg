@@ -1,0 +1,394 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050714" />
+      <stop offset="35%" stop-color="#0a0f2e" />
+      <stop offset="70%" stop-color="#140f38" />
+      <stop offset="100%" stop-color="#070919" />
+    </linearGradient>
+
+    <radialGradient id="nebulaPurple" cx="75%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
+      <stop offset="45%" stop-color="#6366f1" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="nebulaCyan" cx="25%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.25" />
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="groundGlow" cx="50%" cy="85%" r="60%">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.3" />
+      <stop offset="40%" stop-color="#0284c7" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Glass & Building Gradients -->
+    <linearGradient id="glassTowerA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#0f172a" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0.98" />
+    </linearGradient>
+
+    <linearGradient id="glassTowerB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#311042" stop-opacity="0.85" />
+      <stop offset="60%" stop-color="#130e26" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0.98" />
+    </linearGradient>
+
+    <linearGradient id="cyanBeam" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="purpleBeam" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#7e22ce" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="bridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.7" />
+    </linearGradient>
+
+    <!-- Holographic Filters -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="highGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Pattern Grid -->
+    <pattern id="campusGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#6366f1" stroke-width="0.8" stroke-opacity="0.12" />
+    </pattern>
+
+    <pattern id="dotMatrix" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1" fill="#38bdf8" fill-opacity="0.2" />
+    </pattern>
+  </defs>
+
+  <!-- Sky Canvas -->
+  <rect width="1600" height="900" fill="url(#skyGrad)" />
+  <rect width="1600" height="900" fill="url(#nebulaPurple)" />
+  <rect width="1600" height="900" fill="url(#nebulaCyan)" />
+  <rect width="1600" height="900" fill="url(#groundGlow)" />
+
+  <!-- Stars & Constellations -->
+  <g opacity="0.6">
+    <circle cx="120" cy="80" r="1.5" fill="#fff" />
+    <circle cx="180" cy="140" r="1.2" fill="#c4b5fd" />
+    <circle cx="340" cy="90" r="2" fill="#fff" opacity="0.9" />
+    <circle cx="490" cy="160" r="1.5" fill="#7dd3fc" />
+    <circle cx="680" cy="70" r="1.2" fill="#fff" />
+    <circle cx="850" cy="120" r="1.8" fill="#e9d5ff" />
+    <circle cx="1020" cy="60" r="2.2" fill="#fff" />
+    <circle cx="1200" cy="130" r="1.5" fill="#93c5fd" />
+    <circle cx="1380" cy="85" r="1.2" fill="#fff" />
+    <circle cx="1490" cy="150" r="1.8" fill="#c084fc" />
+    <circle cx="90" cy="220" r="1" fill="#fff" />
+    <circle cx="750" cy="240" r="1.4" fill="#67e8f9" />
+    <circle cx="1140" cy="210" r="1.2" fill="#fff" />
+    <circle cx="1520" cy="260" r="1.5" fill="#fbcfe8" />
+
+    <!-- Constellation Lines -->
+    <path d="M 120 80 L 180 140 L 340 90 L 490 160" stroke="#a78bfa" stroke-width="0.75" stroke-dasharray="3 4" fill="none" opacity="0.4" />
+    <path d="M 850 120 L 1020 60 L 1200 130 L 1380 85" stroke="#38bdf8" stroke-width="0.75" stroke-dasharray="3 4" fill="none" opacity="0.35" />
+  </g>
+
+  <!-- Holographic Planetary Orbit Rings (Center Sky) -->
+  <g transform="translate(800, 260)" opacity="0.45" filter="url(#glow)">
+    <ellipse cx="0" cy="0" rx="420" ry="85" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-dasharray="8 6" transform="rotate(-12)" />
+    <ellipse cx="0" cy="0" rx="360" ry="70" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="5 5" transform="rotate(8)" />
+    <ellipse cx="0" cy="0" rx="280" ry="55" fill="none" stroke="#c084fc" stroke-width="1.4" transform="rotate(-4)" />
+    
+    <!-- Holographic Data Nodes -->
+    <circle cx="-280" cy="-20" r="4" fill="#38bdf8" />
+    <circle cx="270" cy="25" r="5" fill="#a855f7" />
+    <circle cx="140" cy="-50" r="3.5" fill="#34d399" />
+    <circle cx="-160" cy="45" r="3" fill="#f472b6" />
+  </g>
+
+  <!-- Perspective Campus Ground Grid (Isometric Plaza) -->
+  <g opacity="0.8">
+    <path d="M 0 540 L 800 420 L 1600 540 L 1600 900 L 0 900 Z" fill="#040714" />
+    <path d="M 0 540 L 800 420 L 1600 540" stroke="#4338ca" stroke-width="1.5" opacity="0.5" />
+    
+    <!-- Perspective Quad Rays -->
+    <g stroke="#6366f1" stroke-width="0.8" opacity="0.25">
+      <line x1="800" y1="420" x2="0" y2="700" />
+      <line x1="800" y1="420" x2="200" y2="900" />
+      <line x1="800" y1="420" x2="400" y2="900" />
+      <line x1="800" y1="420" x2="600" y2="900" />
+      <line x1="800" y1="420" x2="800" y2="900" stroke="#a855f7" stroke-width="1.5" opacity="0.6" />
+      <line x1="800" y1="420" x2="1000" y2="900" />
+      <line x1="800" y1="420" x2="1200" y2="900" />
+      <line x1="800" y1="420" x2="1400" y2="900" />
+      <line x1="800" y1="420" x2="1600" y2="700" />
+    </g>
+
+    <!-- Transverse Concentric Walkway Curves -->
+    <ellipse cx="800" cy="720" rx="650" ry="140" fill="none" stroke="#0ea5e9" stroke-width="1" stroke-dasharray="10 8" opacity="0.3" />
+    <ellipse cx="800" cy="780" rx="520" ry="110" fill="none" stroke="#a855f7" stroke-width="1.2" stroke-dasharray="6 6" opacity="0.4" />
+    <ellipse cx="800" cy="840" rx="380" ry="80" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.5" />
+  </g>
+
+  <!-- Far Background Silhouette: Research Pavilions & Green Canopies -->
+  <g opacity="0.55">
+    <polygon points="120,440 220,410 280,425 280,530 120,530" fill="#0c1228" stroke="#312e81" stroke-width="1" />
+    <polygon points="320,420 400,380 460,400 460,520 320,520" fill="#131338" stroke="#4338ca" stroke-width="1" />
+    <polygon points="1120,410 1200,370 1290,415 1290,520 1120,520" fill="#131338" stroke="#4338ca" stroke-width="1" />
+    <polygon points="1320,430 1440,390 1520,420 1520,530 1320,530" fill="#0c1228" stroke="#312e81" stroke-width="1" />
+  </g>
+
+  <!-- LEFT COMPLEX: Quantum AI & Nanotech Research Pavilion (Glass Tower A) -->
+  <g transform="translate(180, 240)">
+    <!-- Tower Main Mass -->
+    <polygon points="60,110 200,40 280,85 280,480 60,480" fill="url(#glassTowerA)" stroke="#6366f1" stroke-width="2" />
+    
+    <!-- Illuminated Glass Floors -->
+    <g stroke="#38bdf8" stroke-width="1.5" opacity="0.75">
+      <line x1="60" y1="160" x2="200" y2="100" />
+      <line x1="60" y1="210" x2="200" y2="150" />
+      <line x1="60" y1="260" x2="200" y2="200" />
+      <line x1="60" y1="310" x2="200" y2="250" />
+      <line x1="60" y1="360" x2="200" y2="300" stroke="#c084fc" />
+      <line x1="60" y1="410" x2="200" y2="350" />
+      
+      <!-- Right Facet Windows -->
+      <line x1="200" y1="100" x2="280" y2="140" stroke="#818cf8" />
+      <line x1="200" y1="150" x2="280" y2="190" stroke="#818cf8" />
+      <line x1="200" y1="200" x2="280" y2="240" stroke="#818cf8" />
+      <line x1="200" y1="250" x2="280" y2="290" stroke="#818cf8" />
+      <line x1="200" y1="300" x2="280" y2="340" stroke="#c084fc" />
+      <line x1="200" y1="350" x2="280" y2="390" stroke="#818cf8" />
+    </g>
+
+    <!-- Lab Glow Windows (Random illuminated research units) -->
+    <rect x="80" y="175" width="28" height="18" fill="#38bdf8" opacity="0.8" rx="2" filter="url(#glow)" />
+    <rect x="140" y="225" width="34" height="18" fill="#a855f7" opacity="0.85" rx="2" filter="url(#glow)" />
+    <rect x="95" y="280" width="40" height="16" fill="#34d399" opacity="0.8" rx="2" filter="url(#glow)" />
+    <rect x="150" y="325" width="30" height="20" fill="#38bdf8" opacity="0.9" rx="2" filter="url(#glow)" />
+    
+    <!-- Spire & Telemetry Beacon -->
+    <line x1="200" y1="40" x2="200" y2="-40" stroke="#c084fc" stroke-width="2.5" />
+    <circle cx="200" cy="-40" r="5" fill="#ec4899" filter="url(#highGlow)" />
+    <circle cx="200" cy="-40" r="14" fill="none" stroke="#ec4899" stroke-width="1" stroke-dasharray="4 4" opacity="0.8" />
+    
+    <!-- Building Name Badge -->
+    <rect x="65" y="440" width="130" height="24" rx="6" fill="#0f172a" stroke="#818cf8" stroke-width="1" />
+    <text x="75" y="456" fill="#c7d2fe" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">AI RESEACH TOWER A</text>
+  </g>
+
+  <!-- CENTER COMPLEX: The Grand Academic Atrium & Central Digital Twin Hub -->
+  <g transform="translate(620, 180)">
+    <!-- Holographic Dome Structure -->
+    <path d="M 0 350 Q 180 120 360 350 Z" fill="none" stroke="#38bdf8" stroke-width="2.5" opacity="0.8" filter="url(#glow)" />
+    <path d="M 40 350 Q 180 160 320 350 Z" fill="#1e1b4b" fill-opacity="0.35" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6 4" />
+    <ellipse cx="180" cy="350" rx="180" ry="40" fill="#0f172a" stroke="#6366f1" stroke-width="2" />
+    
+    <!-- Geodesic Dome Network Lines -->
+    <g stroke="#22d3ee" stroke-width="1" opacity="0.6">
+      <line x1="180" y1="135" x2="80" y2="280" />
+      <line x1="180" y1="135" x2="180" y2="310" />
+      <line x1="180" y1="135" x2="280" y2="280" />
+      <line x1="80" y1="280" x2="180" y2="310" />
+      <line x1="180" y1="310" x2="280" y2="280" />
+    </g>
+
+    <!-- Vertical Hologram Projector Column from Dome Crest -->
+    <line x1="180" y1="135" x2="180" y2="0" stroke="#38bdf8" stroke-width="3" filter="url(#highGlow)" />
+    
+    <!-- Center Holographic Floating University Seal / Digital Twin Core -->
+    <g transform="translate(180, -20)" filter="url(#highGlow)">
+      <!-- Outer Hexagon -->
+      <polygon points="0,-45 39,-22 39,22 0,45 -39,22 -39,-22" fill="#0c1229" fill-opacity="0.8" stroke="#38bdf8" stroke-width="2" />
+      <!-- Inner Glowing Core -->
+      <circle cx="0" cy="0" r="22" fill="#7c3aed" fill-opacity="0.7" stroke="#e0e7ff" stroke-width="1.5" />
+      <text x="0" y="6" text-anchor="middle" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" letter-spacing="1">360</text>
+      
+      <!-- Orbiting Satellite Indicator Particles -->
+      <circle cx="-50" cy="0" r="3.5" fill="#34d399" />
+      <circle cx="50" cy="0" r="3.5" fill="#f43f5e" />
+      <circle cx="0" cy="-55" r="3" fill="#38bdf8" />
+    </g>
+
+    <!-- Main Glass Entrance Arch & Portico -->
+    <rect x="135" y="325" width="90" height="55" rx="8" fill="#020617" stroke="#38bdf8" stroke-width="1.5" />
+    <rect x="155" y="340" width="50" height="40" fill="#38bdf8" fill-opacity="0.25" stroke="#a855f7" stroke-width="1" />
+    <line x1="180" y1="340" x2="180" y2="380" stroke="#fff" stroke-width="1.5" opacity="0.6" />
+    
+    <!-- Central Plaza Digital Monolith -->
+    <rect x="120" y="415" width="120" height="20" rx="4" fill="#090d24" stroke="#6366f1" stroke-width="1" />
+    <text x="180" y="429" text-anchor="middle" fill="#a5b4fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">GRAND ACADEMIC ATRIUM</text>
+  </g>
+
+  <!-- RIGHT COMPLEX: Engineering, Supercomputing & Quantum Cleanroom (Tower B) -->
+  <g transform="translate(1080, 210)">
+    <!-- Angular Modern Tower Mass -->
+    <polygon points="40,90 170,20 260,70 260,510 40,510" fill="url(#glassTowerB)" stroke="#c084fc" stroke-width="2" />
+    
+    <!-- Floor Stripes -->
+    <g stroke="#c084fc" stroke-width="1.5" opacity="0.7">
+      <line x1="40" y1="140" x2="170" y2="80" />
+      <line x1="40" y1="190" x2="170" y2="130" stroke="#38bdf8" />
+      <line x1="40" y1="240" x2="170" y2="180" />
+      <line x1="40" y1="290" x2="170" y2="230" stroke="#38bdf8" />
+      <line x1="40" y1="340" x2="170" y2="280" />
+      <line x1="40" y1="390" x2="170" y2="330" stroke="#34d399" />
+      <line x1="40" y1="440" x2="170" y2="380" />
+
+      <!-- Side Facet Lines -->
+      <line x1="170" y1="80" x2="260" y2="120" />
+      <line x1="170" y1="130" x2="260" y2="170" />
+      <line x1="170" y1="180" x2="260" y2="220" />
+      <line x1="170" y1="230" x2="260" y2="270" />
+      <line x1="170" y1="280" x2="260" y2="320" />
+      <line x1="170" y1="330" x2="260" y2="370" />
+      <line x1="170" y1="380" x2="260" y2="420" />
+    </g>
+
+    <!-- High-Luminance Windows -->
+    <rect x="60" y="150" width="35" height="22" fill="#c084fc" opacity="0.85" rx="3" filter="url(#glow)" />
+    <rect x="110" y="200" width="45" height="20" fill="#38bdf8" opacity="0.8" rx="3" filter="url(#glow)" />
+    <rect x="75" y="305" width="40" height="20" fill="#f43f5e" opacity="0.85" rx="3" filter="url(#glow)" />
+    <rect x="120" y="355" width="35" height="18" fill="#34d399" opacity="0.85" rx="3" filter="url(#glow)" />
+
+    <!-- Quantum Antenna Array -->
+    <line x1="170" y1="20" x2="170" y2="-55" stroke="#38bdf8" stroke-width="2.5" />
+    <circle cx="170" cy="-55" r="5" fill="#38bdf8" filter="url(#highGlow)" />
+    <line x1="140" y1="20" x2="140" y2="-25" stroke="#a855f7" stroke-width="1.5" />
+    <line x1="200" y1="35" x2="200" y2="-15" stroke="#a855f7" stroke-width="1.5" />
+    
+    <!-- Building Name Badge -->
+    <rect x="45" y="475" width="150" height="24" rx="6" fill="#0f172a" stroke="#c084fc" stroke-width="1" />
+    <text x="55" y="491" fill="#f5d0fe" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">QUANTUM COMPUTING HALL B</text>
+  </g>
+
+  <!-- SKYBRIDGES: Futuristic Illuminated Transparent Bridges Connecting Towers -->
+  <!-- Left Skybridge -->
+  <g filter="url(#glow)">
+    <polygon points="460,400 620,440 620,465 460,425" fill="#1e1b4b" fill-opacity="0.8" stroke="url(#bridgeGrad)" stroke-width="2" />
+    <!-- Pedestrians on bridge (stylized silhouettes with glowing tablets) -->
+    <circle cx="510" cy="398" r="3" fill="#cbd5e1" />
+    <line x1="510" y1="401" x2="510" y2="416" stroke="#cbd5e1" stroke-width="2" />
+    <rect x="512" y="405" width="4" height="6" fill="#38bdf8" filter="url(#highGlow)" />
+
+    <circle cx="550" cy="409" r="3" fill="#cbd5e1" />
+    <line x1="550" y1="412" x2="550" y2="427" stroke="#cbd5e1" stroke-width="2" />
+    <rect x="552" y="415" width="5" height="6" fill="#c084fc" filter="url(#highGlow)" />
+  </g>
+
+  <!-- Right Skybridge -->
+  <g filter="url(#glow)">
+    <polygon points="980,440 1120,405 1120,430 980,465" fill="#1e1b4b" fill-opacity="0.8" stroke="url(#bridgeGrad)" stroke-width="2" />
+    <!-- Pedestrians on right bridge -->
+    <circle cx="1040" cy="413" r="3" fill="#cbd5e1" />
+    <line x1="1040" y1="416" x2="1040" y2="431" stroke="#cbd5e1" stroke-width="2" />
+    <rect x="1037" y="418" width="5" height="5" fill="#34d399" filter="url(#highGlow)" />
+  </g>
+
+  <!-- FOREGROUND PLAZA: Students, Faculty & Autonomous Delivery Drones -->
+  <g transform="translate(0, 0)">
+    <!-- Holographic Wayfinding Marker Center Stage -->
+    <g transform="translate(800, 680)" filter="url(#highGlow)">
+      <polygon points="0,-30 25,-15 25,15 0,30 -25,15 -25,-15" fill="#090d24" fill-opacity="0.9" stroke="#38bdf8" stroke-width="2" />
+      <circle cx="0" cy="0" r="12" fill="#6366f1" fill-opacity="0.6" stroke="#a5b4fc" stroke-width="1.2" />
+      <circle cx="0" cy="0" r="4" fill="#ffffff" />
+      
+      <!-- Ground Projection Ring -->
+      <ellipse cx="0" cy="45" rx="75" ry="18" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.85" />
+      <ellipse cx="0" cy="45" rx="110" ry="26" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.5" />
+    </g>
+
+    <!-- Student Scholar Group (Left Quad) -->
+    <g transform="translate(480, 710)">
+      <!-- Student 1 with Holographic AR Glasses & Tablet -->
+      <circle cx="0" cy="0" r="6" fill="#e2e8f0" />
+      <line x1="-3" y1="-1" x2="4" y2="-1" stroke="#38bdf8" stroke-width="2" /> <!-- AR Visor Glow -->
+      <polygon points="-7,8 7,8 5,38 -5,38" fill="#3b82f6" />
+      <line x1="-4" y1="38" x2="-6" y2="60" stroke="#0f172a" stroke-width="3.5" />
+      <line x1="4" y1="38" x2="6" y2="60" stroke="#0f172a" stroke-width="3.5" />
+      <!-- Holding Glowing Tablet -->
+      <polygon points="6,18 16,14 19,26 9,30" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+      <rect x="9" y="16" width="8" height="9" fill="#38bdf8" opacity="0.9" filter="url(#glow)" />
+      
+      <!-- Student 2 (Collaborating) -->
+      <circle cx="34" cy="-2" r="5.5" fill="#fed7aa" />
+      <polygon points="27,6 41,6 39,36 29,36" fill="#8b5cf6" />
+      <line x1="31" y1="36" x2="29" y2="58" stroke="#0f172a" stroke-width="3.5" />
+      <line x1="37" y1="36" x2="39" y2="58" stroke="#0f172a" stroke-width="3.5" />
+      <circle cx="33" cy="-3" r="2" fill="#ec4899" />
+    </g>
+
+    <!-- Faculty Member with Digital Lecture Wand (Right Quad) -->
+    <g transform="translate(1080, 715)">
+      <circle cx="0" cy="0" r="6" fill="#f8fafc" />
+      <!-- Blazer & Coat -->
+      <polygon points="-8,8 8,8 6,40 -6,40" fill="#475569" />
+      <line x1="-4" y1="40" x2="-6" y2="62" stroke="#020617" stroke-width="3.5" />
+      <line x1="4" y1="40" x2="6" y2="62" stroke="#020617" stroke-width="3.5" />
+      <!-- Pointer with Laser Beam -->
+      <line x1="6" y1="18" x2="18" y2="10" stroke="#94a3b8" stroke-width="2" />
+      <line x1="18" y1="10" x2="45" y2="-10" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="2 3" filter="url(#glow)" />
+      <circle cx="45" cy="-10" r="3" fill="#4ade80" filter="url(#highGlow)" />
+    </g>
+
+    <!-- Autonomous Campus Telemetry Drone Hovering -->
+    <g transform="translate(340, 480)" filter="url(#glow)">
+      <!-- Quad Drone Body -->
+      <rect x="-14" y="-7" width="28" height="14" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="3" fill="#a855f7" />
+      <!-- Rotors -->
+      <line x1="-22" y1="-8" x2="-8" y2="-8" stroke="#38bdf8" stroke-width="1.5" />
+      <line x1="8" y1="-8" x2="22" y2="-8" stroke="#38bdf8" stroke-width="1.5" />
+      <circle cx="-15" cy="-8" r="7" fill="none" stroke="#22d3ee" stroke-width="0.8" opacity="0.7" />
+      <circle cx="15" cy="-8" r="7" fill="none" stroke="#22d3ee" stroke-width="0.8" opacity="0.7" />
+      <!-- Downward LiDAR Beam -->
+      <polygon points="-8,7 8,7 28,60 -28,60" fill="url(#cyanBeam)" opacity="0.25" />
+    </g>
+  </g>
+
+  <!-- OVERLAY TELEMETRY HUD ELEMENTS (Top & Corner Glass Ribbons) -->
+  <g>
+    <!-- Top Left Status HUD Badge -->
+    <g transform="translate(48, 48)">
+      <rect x="0" y="0" width="280" height="52" rx="12" fill="#090d24" fill-opacity="0.85" stroke="#334155" stroke-width="1" />
+      <circle cx="26" cy="26" r="6" fill="#10b981" filter="url(#glow)" />
+      <text x="44" y="22" fill="#f8fafc" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="bold">SMARTCAMPUS 360 AI</text>
+      <text x="44" y="38" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10">SPATIAL DIGITAL TWIN v4.2 [ONLINE]</text>
+    </g>
+
+    <!-- Top Right Telemetry Gauge -->
+    <g transform="translate(1260, 48)">
+      <rect x="0" y="0" width="290" height="52" rx="12" fill="#090d24" fill-opacity="0.85" stroke="#334155" stroke-width="1" />
+      <text x="18" y="22" fill="#e2e8f0" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold">CAMPUS HEALTH INDEX</text>
+      <text x="18" y="38" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10">LATENCY: 4.8ms • UPTIME: 99.98%</text>
+      <circle cx="260" cy="26" r="14" fill="none" stroke="#334155" stroke-width="3" />
+      <circle cx="260" cy="26" r="14" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="72 20" transform="rotate(-90 260 26)" />
+      <text x="260" y="30" text-anchor="middle" fill="#fff" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold">98%</text>
+    </g>
+
+    <!-- Bottom Center HUD Banner Strip -->
+    <g transform="translate(460, 836)">
+      <rect x="0" y="0" width="680" height="42" rx="12" fill="#090d24" fill-opacity="0.9" stroke="#6366f1" stroke-width="1.2" filter="url(#glow)" />
+      <text x="340" y="26" text-anchor="middle" fill="#e2e8f0" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="600" letter-spacing="0.5">
+        ✦ AUTONOMOUS ACADEMIC GOVERNANCE • PREDICTIVE RETENTION AI • SPATIAL 3D TWIN ✦
+      </text>
+    </g>
+  </g>
+</svg>

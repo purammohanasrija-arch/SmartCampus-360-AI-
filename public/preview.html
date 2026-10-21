@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartCampus 360 AI — Interactive Student Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #020617;
+      --accent-violet: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ========================================================= */
+    /* FULLSCREEN INTERACTIVE COVER VIEW                         */
+    /* ========================================================= */
+    .hero-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+      background: #020617;
+      perspective: 1200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 28px;
+      user-select: none;
+    }
+
+    /* 3D Scene Layer */
+    .hero-scene {
+      position: absolute;
+      inset: -20px;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+      will-change: transform;
+    }
+
+    .hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: filter 0.6s ease, transform 0.5s ease-out;
+    }
+
+    /* Cyber Atmosphere Modes */
+    .theme-sunset .hero-image {
+      filter: brightness(1) contrast(1) saturate(1);
+    }
+    .theme-midnight .hero-image {
+      filter: brightness(0.92) contrast(1.18) hue-rotate(-22deg) saturate(1.2);
+    }
+    .theme-matrix .hero-image {
+      filter: brightness(0.95) contrast(1.22) hue-rotate(75deg) saturate(1.35);
+    }
+
+    /* Dynamic Flashlight / Cursor Spotlight */
+    .cursor-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background: radial-gradient(circle 380px at var(--mx, 50%) var(--my, 50%), rgba(6, 182, 212, 0.18), rgba(139, 92, 246, 0.08) 45%, transparent 75%);
+      transition: opacity 0.3s ease;
+    }
+
+    /* Holographic Radar Scan Line */
+    .radar-scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #06b6d4, #a855f7, #06b6d4, transparent);
+      box-shadow: 0 0 25px #06b6d4, 0 0 50px #8b5cf6;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .radar-scan-line.scanning {
+      animation: radarScan 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      opacity: 1;
+    }
+
+    @keyframes radarScan {
+      0% { top: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* Click Sonar Ripple */
+    .sonar-ripple {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #06b6d4;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(1);
+      animation: sonarExpand 1s ease-out forwards;
+      z-index: 6;
+    }
+
+    @keyframes sonarExpand {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(25); opacity: 0; border-color: #8b5cf6; }
+    }
+
+    /* Ambient Canvas for Floating Energy Particles */
+    #particleCanvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* ========================================================= */
+    /* INTERACTIVE HOT-ZONES & HOLOGRAPHIC HUDS                  */
+    /* ========================================================= */
+    .interactive-zone {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 15;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+    }
+
+    .interactive-zone:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .zone-beacon {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zone-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #06b6d4;
+      box-shadow: 0 0 15px #06b6d4, 0 0 30px #06b6d4;
+      transition: all 0.25s ease;
+    }
+
+    .zone-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid #06b6d4;
+      animation: beaconPulse 2.4s infinite ease-out;
+    }
+
+    @keyframes beaconPulse {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    .interactive-zone:hover .zone-dot {
+      transform: scale(1.5);
+      background: #ffffff;
+      box-shadow: 0 0 20px #ffffff, 0 0 35px #a855f7;
+    }
+
+    /* Image Hotspots Coordinate Lock Layer */
+    .image-hotspots-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 12;
+      transform-style: preserve-3d;
+    }
+
+    /* Glowing Hotspot Reticle on Cards (Scales proportionally with image) */
+    .card-hotspot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 6.0%;
+      height: 12.8%;
+      min-width: 58px;
+      min-height: 70px;
+      border-radius: 14px;
+      border: 1.5px dashed rgba(6, 182, 212, 0.45);
+      background: rgba(6, 182, 212, 0.05);
+      z-index: 15;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 5px;
+      box-sizing: border-box;
+    }
+
+    .card-hotspot:hover {
+      border: 2px solid #06b6d4;
+      background: rgba(6, 182, 212, 0.22);
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.65), inset 0 0 15px rgba(139, 92, 246, 0.35);
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+
+    .card-hotspot-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #06b6d4;
+      box-shadow: 0 0 8px #06b6d4;
+      animation: pulse 1.6s infinite;
+      margin-bottom: 2px;
+    }
+
+    /* Holographic Floating HUD Cards */
+    .holo-hud {
+      position: absolute;
+      background: rgba(10, 15, 30, 0.94);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(6, 182, 212, 0.45);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 182, 212, 0.25);
+      padding: 16px 20px;
+      border-radius: 16px;
+      width: 310px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px) scale(0.96);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 30;
+      text-align: left;
+    }
+
+    .interactive-zone:hover .holo-hud,
+    .card-hotspot:hover .holo-hud {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Popover positioning */
+    .hud-top {
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%) translateY(12px);
+    }
+    .interactive-zone:hover .hud-top,
+    .card-hotspot:hover .hud-top {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hud-bottom {
+      top: calc(100% + 14px);
+      left: 50%;
+      transform-origin: top center;
+      transform: translateX(-50%) translateY(-12px);
+    }
+    .interactive-zone:hover .hud-bottom,
+    .card-hotspot:hover .hud-bottom {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hud-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #06b6d4;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hud-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hud-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .hud-stats-row {
+      display: flex;
+      gap: 12px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hud-stat-item {
+      flex: 1;
+    }
+    .hud-stat-label {
+      font-size: 0.68rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hud-stat-value {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .hud-btn-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .hud-btn-action:hover {
+      background: linear-gradient(135deg, #8b5cf6, #0891b2);
+      transform: translateY(-1px);
+    }
+
+    /* Precision Coordinates for the 7 Sky Feature Cards (Measured on 1376x768 artwork) */
+    #cardStudents { left: 26.56%; top: 37.04%; }
+    #cardFaculty  { left: 34.38%; top: 37.04%; }
+    #cardAdmin    { left: 42.19%; top: 37.04%; }
+    #cardAnalytics{ left: 50.00%; top: 37.04%; }
+    #cardLearning { left: 57.81%; top: 37.04%; }
+    #cardAI       { left: 65.63%; top: 37.04%; }
+    #cardCampus   { left: 73.44%; top: 37.04%; }
+
+    /* Precision Coordinates for Key Landmark Hotspots (Measured on 1376x768 artwork) */
+    #spotGlobe     { left: 10.5%; top: 17.6%; }
+    #spotLeftPanel { left: 8.7%;  top: 41.7%; }
+    #spotRightPanel{ left: 91.2%; top: 44.3%; }
+    #spotCenterQuad{ left: 50.0%; top: 57.9%; }
+    #spotWalkway   { left: 50.0%; top: 77.5%; }
+
+    /* ========================================================= */
+    /* TOP FLOATING CONTROLS & STATUS DOCK                       */
+    /* ========================================================= */
+    .top-controls-dock {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      right: 24px;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .brand-pill {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 1.8s infinite;
+    }
+
+    .top-buttons-cluster {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hud-control-btn {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .hud-control-btn:hover {
+      background: rgba(139, 92, 246, 0.25);
+      border-color: rgba(139, 92, 246, 0.5);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .hud-control-btn.active {
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      box-shadow: 0 0 18px rgba(6, 182, 212, 0.4);
+    }
+
+    /* ========================================================= */
+    /* BOTTOM ACTION DOCK                                        */
+    /* ========================================================= */
+    .bottom-action-dock {
+      position: relative;
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .action-pill-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-enter-app {
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      color: #ffffff;
+      padding: 14px 34px;
+      border-radius: 9999px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-enter-app:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(6, 182, 212, 0.6);
+      background: linear-gradient(135deg, #8b5cf6, #0891b2);
+    }
+
+    .btn-quick-scroll {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-quick-scroll:hover {
+      background: rgba(139, 92, 246, 0.3);
+      border-color: rgba(139, 92, 246, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .interactive-hints-strip {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(8px);
+      padding: 5px 16px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .interactive-hints-strip kbd {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #38bdf8;
+      font-size: 0.72rem;
+    }
+
+    /* ========================================================= */
+    /* INTERACTIVE AI FLYOUT DIALOGUE                            */
+    /* ========================================================= */
+    .ai-flyout-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      width: 90%;
+      max-width: 580px;
+      background: rgba(10, 15, 30, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(6, 182, 212, 0.5);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(139, 92, 246, 0.35);
+      z-index: 100;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ai-flyout-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      border-b: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #94a3b8;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+    }
+    .modal-close-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    /* ========================================================= */
+    /* DASHBOARD SECTION                                         */
+    /* ========================================================= */
+    .dashboard-section {
+      background: var(--bg-base);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 90% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+      padding: 60px 24px 100px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dash-container {
+      max-width: 1560px;
+      margin: 0 auto;
+    }
+
+    .dash-header-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 27, 75, 0.75) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 20px;
+      padding: 24px 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .dash-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .dash-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(6, 182, 212, 0.4);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .kpi-violet::before { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
+    .kpi-cyan::before { background: linear-gradient(90deg, #06b6d4, #67e8f9); }
+    .kpi-emerald::before { background: linear-gradient(90deg, #10b981, #6ee7b7); }
+    .kpi-amber::before { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 8px 0 6px;
+    }
+
+    .kpi-footer {
+      font-size: 0.82rem;
+      color: #34d399;
+    }
+
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .dual-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .panel-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dept-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .dept-table th {
+      text-align: left;
+      padding: 10px 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .dept-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .bar-bg {
+      width: 100%;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .bar-val {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    }
+
+    .chat-feed {
+      background: rgba(2, 6, 23, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 220px;
+      max-height: 260px;
+      overflow-y: auto;
+      font-size: 0.88rem;
+      margin-bottom: 12px;
+    }
+
+    .chat-bubble {
+      background: rgba(139, 92, 246, 0.14);
+      border: 1px solid rgba(139, 92, 246, 0.28);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #e2e8f0;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .btn-chat {
+      background: #7c3aed;
+      border: none;
+      color: #ffffff;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.85rem;
+      padding: 40px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body class="theme-sunset">
+
+  <!-- ========================================================= -->
+  <!-- FULLSCREEN INTERACTIVE COVER VIEW                         -->
+  <!-- ========================================================= -->
+  <section class="hero-viewport" id="heroStage" onclick="handleCoverClick(event)">
+    
+    <!-- 3D Parallax Scene -->
+    <div class="hero-scene" id="heroScene">
+      <img class="hero-image" src="smartcampus_360_ai_cover.jpg" alt="SmartCampus 360 AI Cover Page">
+      
+      <!-- Holographic Radar Laser Scan Line -->
+      <div class="radar-scan-line" id="radarScanLine"></div>
+
+      <!-- Canvas for Floating Ambient Energy Particles -->
+      <canvas id="particleCanvas"></canvas>
+
+      <!-- Dynamic Flashlight / Cursor Spotlight -->
+      <div class="cursor-spotlight" id="cursorSpotlight"></div>
+
+      <!-- Hotspots Coordinate Lock Layer (Matches exact rendered bounds of cover image) -->
+      <div class="image-hotspots-layer" id="imageHotspotsLayer">
+
+      <!-- ======================================================= -->
+      <!-- 7 INTERACTIVE SKY FEATURE CARDS (Click/Hover)           -->
+      <!-- ======================================================= -->
+      <div class="card-hotspot" id="cardStudents" onclick="openModule('students', event)">
+        <div class="card-hotspot-indicator"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge">● Live Scholars Registry</div>
+          <div class="hud-title">Students Registry <span>1,248</span></div>
+          <p class="hud-desc">Cryptographically verified digital student IDs with automated biometric & QR attendance telemetry.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Retention</div>
+              <div class="hud-stat-value" style="color: #10b981;">98.4%</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Avg CGPA</div>
+              <div class="hud-stat-value" style="color: #38bdf8;">8.92</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="openFullApp()">Launch Student Registry ➜</button>
+        </div>
+      </div>
+
+      <div class="card-hotspot" id="cardFaculty" onclick="openModule('faculty', event)">
+        <div class="card-hotspot-indicator" style="background: #a855f7; box-shadow: 0 0 8px #a855f7;"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge" style="color: #c084fc;">● Distinguished Chairs</div>
+          <div class="hud-title">Faculty & Research <span>84 Chairs</span></div>
+          <p class="hud-desc">World-class professors across 25 specialized laboratories with 1:15 faculty-to-student mentorship ratio.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Active Labs</div>
+              <div class="hud-stat-value" style="color: #c084fc;">25 Labs</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Publications</div>
+              <div class="hud-stat-value" style="color: #38bdf8;">142+</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="openFullApp()">Explore Faculty Roster ➜</button>
+        </div>
+      </div>
+
+      <div class="card-hotspot" id="cardAdmin" onclick="openModule('admin', event)">
+        <div class="card-hotspot-indicator" style="background: #eab308; box-shadow: 0 0 8px #eab308;"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge" style="color: #facc15;">● Registrar & Governance</div>
+          <div class="hud-title">Administration <span>5 Divisions</span></div>
+          <p class="hud-desc">Central institutional command overseeing 5 accredited engineering & science academic divisions.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Compliance</div>
+              <div class="hud-stat-value" style="color: #10b981;">100% ABET</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Admissions</div>
+              <div class="hud-stat-value" style="color: #facc15;">AY 2026</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="openFullApp()">Executive Admin Center ➜</button>
+        </div>
+      </div>
+
+      <div class="card-hotspot" id="cardAnalytics" onclick="openModule('analytics', event)">
+        <div class="card-hotspot-indicator" style="background: #06b6d4; box-shadow: 0 0 8px #06b6d4;"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge">● Multi-Dimensional AI</div>
+          <div class="hud-title">Live Telemetry <span>94% Accuracy</span></div>
+          <p class="hud-desc">Predictive machine learning models tracking early-warning attendance drops and GPA forecasting.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Attendance</div>
+              <div class="hud-stat-value" style="color: #10b981;">92.4%</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Collections</div>
+              <div class="hud-stat-value" style="color: #38bdf8;">$4.28M</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="scrollToDashboard()">Inspect Telemetry Charts ➜</button>
+        </div>
+      </div>
+
+      <div class="card-hotspot" id="cardLearning" onclick="openModule('learning', event)">
+        <div class="card-hotspot-indicator" style="background: #ec4899; box-shadow: 0 0 8px #ec4899;"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge" style="color: #f472b6;">● Coursework & LMS</div>
+          <div class="hud-title">Learning Hub <span>128 Courses</span></div>
+          <p class="hud-desc">Digital curriculum engine with automated plagiarism audits and continuous student grading rubrics.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Curricula</div>
+              <div class="hud-stat-value" style="color: #f472b6;">128 Modules</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">On-Time Rate</div>
+              <div class="hud-stat-value" style="color: #10b981;">96.8%</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="openFullApp()">Launch Coursework LMS ➜</button>
+        </div>
+      </div>
+
+      <div class="card-hotspot" id="cardAI" onclick="openAiFlyout(event)">
+        <div class="card-hotspot-indicator" style="background: #8b5cf6; box-shadow: 0 0 12px #8b5cf6;"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge" style="color: #a855f7;">● Gemini 3.8 Flash</div>
+          <div class="hud-title">AI Copilot <span>Instant Chat</span></div>
+          <p class="hud-desc">Institutional reasoning assistant ready to simulate revision blueprints and interpret regulations.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Latency</div>
+              <div class="hud-stat-value" style="color: #10b981;">42ms</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Model</div>
+              <div class="hud-stat-value" style="color: #38bdf8;">Gemini 3.8</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="openAiFlyout(event)">💬 Open AI Copilot Chat ➜</button>
+        </div>
+      </div>
+
+      <div class="card-hotspot" id="cardCampus" onclick="openModule('campus3d', event)">
+        <div class="card-hotspot-indicator" style="background: #10b981; box-shadow: 0 0 8px #10b981;"></div>
+        <div class="holo-hud hud-bottom">
+          <div class="hud-badge" style="color: #34d399;">● WebGL Digital Twin</div>
+          <div class="hud-title">Spatial 3D Campus <span>Live</span></div>
+          <p class="hud-desc">Photorealistic spatial digital twin with raycast building inspector and live room occupancy.</p>
+          <div class="hud-stats-row">
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Buildings</div>
+              <div class="hud-stat-value" style="color: #34d399;">8 Complexes</div>
+            </div>
+            <div class="hud-stat-item">
+              <div class="hud-stat-label">Occupancy</div>
+              <div class="hud-stat-value" style="color: #38bdf8;">74% Quad</div>
+            </div>
+          </div>
+          <button class="hud-btn-action" onclick="openFullApp()">Launch 3D Campus Viewer ➜</button>
+        </div>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- KEY LANDMARK BEACONS                                    -->
+      <!-- ======================================================= -->
+      <div class="interactive-zone" id="spotGlobe" onclick="event.stopPropagation(); scrollToDashboard();">
+        <div class="zone-beacon">
+          <div class="zone-ring"></div>
+          <div class="zone-dot"></div>
+        </div>
+        <div class="holo-hud hud-top">
+          <div class="hud-badge">● Global Academic Mesh</div>
+          <div class="hud-title">Federated University Network</div>
+          <p class="hud-desc">Interconnected worldwide network spanning 14 partner universities across 4 continents.</p>
+          <button class="hud-btn-action" onclick="scrollToDashboard()">Inspect Global Metrics ➜</button>
+        </div>
+      </div>
+
+      <div class="interactive-zone" id="spotLeftPanel" onclick="event.stopPropagation(); scrollToDashboard();">
+        <div class="zone-beacon">
+          <div class="zone-ring"></div>
+          <div class="zone-dot" style="background: #a855f7; box-shadow: 0 0 15px #a855f7;"></div>
+        </div>
+        <div class="holo-hud hud-top">
+          <div class="hud-badge" style="color: #c084fc;">● Strategic Pillars</div>
+          <div class="hud-title">Institutional Excellence</div>
+          <p class="hud-desc">Better Education, Smarter Management, Stronger Community, and Brighter Student Futures.</p>
+          <button class="hud-btn-action" onclick="scrollToDashboard()">View Institutional Goals ➜</button>
+        </div>
+      </div>
+
+      <div class="interactive-zone" id="spotRightPanel" onclick="event.stopPropagation(); scrollToDashboard();">
+        <div class="zone-beacon">
+          <div class="zone-ring"></div>
+          <div class="zone-dot" style="background: #38bdf8; box-shadow: 0 0 15px #38bdf8;"></div>
+        </div>
+        <div class="holo-hud hud-top">
+          <div class="hud-badge">● Enterprise Capabilities</div>
+          <div class="hud-title">Full Student Lifecycle</div>
+          <p class="hud-desc">From initial digital admission and dynamic fee receipts to campus placement with Fortune 500 partners.</p>
+          <button class="hud-btn-action" onclick="openFullApp()">Explore Student Portal ➜</button>
+        </div>
+      </div>
+
+      <div class="interactive-zone" id="spotCenterQuad" onclick="event.stopPropagation(); scrollToDashboard();">
+        <div class="zone-beacon">
+          <div class="zone-ring"></div>
+          <div class="zone-dot" style="background: #eab308; box-shadow: 0 0 15px #eab308;"></div>
+        </div>
+        <div class="holo-hud hud-top">
+          <div class="hud-badge" style="color: #facc15;">● Central Quad</div>
+          <div class="hud-title">Turing Hall & Innovation Quad</div>
+          <p class="hud-desc">Central hub of academic operations hosting lecture amphitheaters and quantum computing laboratories.</p>
+          <button class="hud-btn-action" onclick="scrollToDashboard()">Scroll to Command Center ➜</button>
+        </div>
+      </div>
+
+      <div class="interactive-zone" id="spotWalkway" onclick="event.stopPropagation(); scrollToDashboard();">
+        <div class="zone-beacon">
+          <div class="zone-ring"></div>
+          <div class="zone-dot" style="background: #10b981; box-shadow: 0 0 15px #10b981;"></div>
+        </div>
+        <div class="holo-hud hud-top">
+          <div class="hud-badge" style="color: #34d399;">● Student Community</div>
+          <div class="hud-title">1,248 Active Scholars</div>
+          <p class="hud-desc">Dynamic student cohort with active peer coding groups, honors councils, and extracurricular societies.</p>
+          <button class="hud-btn-action" onclick="scrollToDashboard()">Inspect Student Telemetry ➜</button>
+        </div>
+      </div>
+
+      </div> <!-- End image-hotspots-layer -->
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TOP FLOATING CONTROLS & STATUS DOCK                       -->
+    <!-- ========================================================= -->
+    <div class="top-controls-dock">
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        <span>SmartCampus 360 AI • Live Enterprise Telemetry</span>
+      </div>
+
+      <div class="top-buttons-cluster">
+        <!-- Interactive Radar Scanner Trigger -->
+        <button class="hud-control-btn" id="btnRadarScan" onclick="triggerRadarScan()">
+          <span>⚡ Radar Scan</span>
+        </button>
+
+        <!-- Cyber Lighting Mode Switcher -->
+        <button class="hud-control-btn" onclick="cycleTheme()" id="btnThemeToggle" title="Cycle Atmospheric Lighting Theme">
+          <span>🎨 Sunset Mode</span>
+        </button>
+
+        <!-- Audio Synthesizer Toggle -->
+        <button class="hud-control-btn" onclick="toggleAudio()" id="btnAudioToggle" title="Toggle Futuristic UI Audio FX">
+          <span id="audioIcon">🔈 Audio: Off</span>
+        </button>
+
+        <!-- AI Copilot Trigger -->
+        <button class="hud-control-btn" onclick="openAiFlyout(event)">
+          <span>🤖 Copilot</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM ACTION DOCK                                        -->
+    <!-- ========================================================= -->
+    <div class="bottom-action-dock" onclick="event.stopPropagation()">
+      <div class="action-pill-row">
+        <a href="http://localhost:3000" class="btn-enter-app" onclick="playHoloBeep()">
+          <span>🚀 Open Main Dashboard ➜</span>
+        </a>
+        <button class="btn-quick-scroll" onclick="scrollToDashboard(); playHoloBeep();">
+          <span>📊 Scroll to Quick Dashboard ⬇</span>
+        </button>
+      </div>
+
+      <div class="interactive-hints-strip">
+        <span>💡 Tip: Click or hover any sky card for live telemetry</span>
+        <span>•</span>
+        <span>Press <kbd>Space</kbd> to Scan</span>
+        <span>•</span>
+        <span>Press <kbd>D</kbd> for Dashboard</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- INTERACTIVE AI COPILOT DIALOGUE MODAL                     -->
+  <!-- ========================================================= -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeAiFlyout()"></div>
+  <div class="ai-flyout-modal" id="aiFlyoutModal">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #7c3aed, #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+          🤖
+        </div>
+        <div>
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: #ffffff;">SmartCampus 360 AI Copilot</h3>
+          <p style="font-size: 0.75rem; color: #38bdf8; font-family: 'JetBrains Mono', monospace;">Powered by Google Gemini 3.8 Flash</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" onclick="closeAiFlyout()">&times;</button>
+    </div>
+
+    <div class="chat-feed" id="modalChatFeed" style="min-height: 240px; max-height: 320px;">
+      <div class="chat-bubble">
+        <strong>SmartCampus AI:</strong> Welcome to SmartCampus 360 AI! I am your institutional assistant. You can ask me about campus attendance policies, student transcripts, faculty allocations, or upcoming assignment deadlines.
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
+      <button onclick="quickPrompt('What is the attendance policy?')" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px; padding: 4px 10px; font-size: 0.75rem; color: #c4b5fd; cursor: pointer;">📋 Attendance Policy</button>
+      <button onclick="quickPrompt('Simulate midterm CGPA requirements')" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px; padding: 4px 10px; font-size: 0.75rem; color: #38bdf8; cursor: pointer;">🎯 CGPA Simulation</button>
+      <button onclick="quickPrompt('What coursework deadlines are upcoming?')" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px; padding: 4px 10px; font-size: 0.75rem; color: #6ee7b7; cursor: pointer;">📅 Upcoming Deadlines</button>
+    </div>
+
+    <div class="chat-input-row">
+      <input id="modalChatInput" type="text" class="chat-input" placeholder="Ask AI about policies, grades, or faculty..." onkeydown="if(event.key==='Enter') sendModalChat()">
+      <button class="btn-chat" onclick="sendModalChat()">Send</button>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- DASHBOARD SECTION                                         -->
+  <!-- ========================================================= -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="dash-container">
+      
+      <div class="dash-header-card">
+        <div>
+          <div style="font-size: 0.8rem; color: #c4b5fd; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+            Executive Command Center • Real-time Telemetry
+          </div>
+          <h2 class="dash-heading">SmartCampus 360 AI Command Center</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
+            Institutional oversight, cohort performance telemetry, and academic operations.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <a href="http://localhost:3000" class="btn-enter-app" style="padding: 10px 22px; font-size: 0.92rem;">
+            <span>🚀 Launch Campus Portal ➜</span>
+          </a>
+          <button class="btn-quick-scroll" onclick="scrollToTop()" style="padding: 10px 20px; font-size: 0.92rem;">
+            <span>⬆️ Top Cover</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 KPIs -->
+      <div class="dash-kpis">
+        <div class="kpi-card kpi-violet">
+          <div class="kpi-label">Total Enrolled Students</div>
+          <div class="kpi-num">1,248</div>
+          <div class="kpi-footer">▲ +8.4% YoY vs previous cohort</div>
+        </div>
+
+        <div class="kpi-card kpi-cyan">
+          <div class="kpi-label">Faculty & Active Labs</div>
+          <div class="kpi-num">84 <span style="font-size: 1.2rem; font-weight: 500; color: #94a3b8;">/ 25 Labs</span></div>
+          <div class="kpi-footer">● 100% Operational</div>
+        </div>
+
+        <div class="kpi-card kpi-emerald">
+          <div class="kpi-label">Average Attendance</div>
+          <div class="kpi-num">92.4%</div>
+          <div class="kpi-footer">▲ +3.1% above 75% cutoff</div>
+        </div>
+
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-label">Tuition Revenue Realized</div>
+          <div class="kpi-num">$4.28M</div>
+          <div class="kpi-footer">96.5% Collected</div>
+        </div>
+      </div>
+
+      <!-- Dual Panels -->
+      <div class="dual-grid">
+        <div class="panel-card">
+          <h3>🏛️ Department Academic Index & Capacity</h3>
+          <table class="dept-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Department Name</th>
+                <th>Students</th>
+                <th>Avg CGPA</th>
+                <th>Attendance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: #c4b5fd;">CSE</strong></td>
+                <td>Computer Science & AI</td>
+                <td>420</td>
+                <td><strong style="color: #6ee7b7;">8.92</strong></td>
+                <td>
+                  <div>94.2%</div>
+                  <div class="bar-bg"><div class="bar-val" style="width: 94%;"></div></div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong style="color: #c4b5fd;">ECE</strong></td>
+                <td>Electronics & Quantum Comms</td>
+                <td>310</td>
+                <td><strong style="color: #6ee7b7;">8.54</strong></td>
+                <td>
+                  <div>91.8%</div>
+                  <div class="bar-bg"><div class="bar-val" style="width: 92%;"></div></div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong style="color: #c4b5fd;">MECH</strong></td>
+                <td>Mechanical & Robotics</td>
+                <td>290</td>
+                <td><strong style="color: #6ee7b7;">8.36</strong></td>
+                <td>
+                  <div>89.5%</div>
+                  <div class="bar-bg"><div class="bar-val" style="width: 90%;"></div></div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong style="color: #c4b5fd;">BIO</strong></td>
+                <td>Biotechnology & Genomics</td>
+                <td>180</td>
+                <td><strong style="color: #6ee7b7;">8.71</strong></td>
+                <td>
+                  <div>93.0%</div>
+                  <div class="bar-bg"><div class="bar-val" style="width: 93%;"></div></div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong style="color: #c4b5fd;">MGMT</strong></td>
+                <td>School of Management</td>
+                <td>240</td>
+                <td><strong style="color: #6ee7b7;">8.40</strong></td>
+                <td>
+                  <div>90.4%</div>
+                  <div class="bar-bg"><div class="bar-val" style="width: 90%;"></div></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel-card">
+          <h3>🤖 Gemini 3.8 Flash AI Copilot</h3>
+          <div id="chatFeed" class="chat-feed">
+            <div class="chat-bubble">
+              <strong>SmartCampus AI:</strong> Hello Chancellor Vance. Average campus attendance stands at 92.4% with 14 early warning alerts managed by the Dean's office. How may I assist you today?
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input id="chatInput" type="text" class="chat-input" placeholder="Ask about attendance, courses..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+            <button class="btn-chat" onclick="sendChatMessage()">Ask</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>SmartCampus 360 AI &copy; 2026 • Enterprise University Management • Powered by Google Gemini 3.8 Flash</p>
+  </footer>
+
+  <script>
+    // =========================================================
+    // AUDIO SYNTHESIZER (Web Audio API)
+    // =========================================================
+    let audioEnabled = false;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAudio() {
+      initAudio();
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('audioIcon');
+      btn.innerText = audioEnabled ? '🔊 Audio: On' : '🔈 Audio: Off';
+      document.getElementById('btnAudioToggle').classList.toggle('active', audioEnabled);
+      if (audioEnabled) playHoloBeep(880, 0.08);
+    }
+
+    function playHoloBeep(freq = 600, duration = 0.06) {
+      if (!audioEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, audioCtx.currentTime + duration);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    // Attach hover sound to all interactive elements
+    document.querySelectorAll('.card-hotspot, .interactive-zone, .hud-control-btn, .btn-enter-app, .btn-quick-scroll').forEach(el => {
+      el.addEventListener('mouseenter', () => playHoloBeep(480, 0.04));
+    });
+
+    // =========================================================
+    // DYNAMIC IMAGE BOUNDS & HOTSPOTS AUTO-ALIGNMENT
+    // Keeps all interactive boxes 100% pixel-locked to artwork
+    // =========================================================
+    const heroStage = document.getElementById('heroStage');
+    const heroScene = document.getElementById('heroScene');
+
+    function updateHotspotsLayer() {
+      const layer = document.getElementById('imageHotspotsLayer');
+      const img = document.querySelector('.hero-image');
+      if (!heroScene || !layer) return;
+
+      const sceneW = heroScene.clientWidth;
+      const sceneH = heroScene.clientHeight;
+      if (!sceneW || !sceneH) return;
+
+      const imgAspect = (img && img.naturalWidth && img.naturalHeight)
+        ? (img.naturalWidth / img.naturalHeight)
+        : (1376 / 768);
+
+      const sceneAspect = sceneW / sceneH;
+
+      let renderW, renderH, leftOffset, topOffset;
+
+      if (sceneAspect > imgAspect) {
+        // Viewport is wider than image aspect ratio: image fills width
+        renderW = sceneW;
+        renderH = sceneW / imgAspect;
+        leftOffset = 0;
+        topOffset = 0;
+      } else {
+        // Viewport is taller/narrower than image: image fills height, centered horizontally
+        renderH = sceneH;
+        renderW = sceneH * imgAspect;
+        leftOffset = (sceneW - renderW) / 2;
+        topOffset = 0;
+      }
+
+      layer.style.left = leftOffset + 'px';
+      layer.style.top = topOffset + 'px';
+      layer.style.width = renderW + 'px';
+      layer.style.height = renderH + 'px';
+    }
+
+    const heroImg = document.querySelector('.hero-image');
+    if (heroImg) {
+      if (heroImg.complete) {
+        updateHotspotsLayer();
+      } else {
+        heroImg.addEventListener('load', updateHotspotsLayer);
+      }
+    }
+
+    window.addEventListener('resize', updateHotspotsLayer);
+    window.addEventListener('orientationchange', updateHotspotsLayer);
+    document.addEventListener('DOMContentLoaded', updateHotspotsLayer);
+    if (window.ResizeObserver && heroScene) {
+      new ResizeObserver(() => updateHotspotsLayer()).observe(heroScene);
+    }
+    setTimeout(updateHotspotsLayer, 50);
+    setTimeout(updateHotspotsLayer, 300);
+
+    // =========================================================
+    // 3D MOUSE PARALLAX & SPOTLIGHT
+    // =========================================================
+
+    heroStage.addEventListener('mousemove', (e) => {
+      const rect = heroStage.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+
+      // Update cursor spotlight position
+      heroStage.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+      heroStage.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+
+      // Gentle 3D perspective tilt
+      const tiltX = (0.5 - y) * 12; // -6 to +6 deg
+      const tiltY = (x - 0.5) * 12; // -6 to +6 deg
+
+      heroScene.style.transform = `scale(1.03) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    });
+
+    heroStage.addEventListener('mouseleave', () => {
+      heroScene.style.transform = `scale(1) rotateX(0deg) rotateY(0deg)`;
+      heroStage.style.setProperty('--mx', '50%');
+      heroStage.style.setProperty('--my', '50%');
+    });
+
+    // Handle click anywhere on cover: ripple & scroll
+    function handleCoverClick(e) {
+      if (e.target.closest('.interactive-zone, .card-hotspot, .top-controls-dock, .bottom-action-dock, .ai-flyout-modal')) {
+        return;
+      }
+      createRipple(e.clientX, e.clientY);
+      playHoloBeep(720, 0.08);
+      setTimeout(scrollToDashboard, 200);
+    }
+
+    function createRipple(x, y) {
+      const ripple = document.createElement('div');
+      ripple.className = 'sonar-ripple';
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 1000);
+    }
+
+    // =========================================================
+    // THEME CYCLER (Sunset / Midnight / Matrix)
+    // =========================================================
+    const themes = [
+      { id: 'theme-sunset', name: '🎨 Sunset Mode' },
+      { id: 'theme-midnight', name: '🌌 Cyber Midnight' },
+      { id: 'theme-matrix', name: '⚡ Quantum Matrix' }
+    ];
+    let currentThemeIdx = 0;
+
+    function cycleTheme() {
+      currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+      document.body.className = themes[currentThemeIdx].id;
+      document.getElementById('btnThemeToggle').innerHTML = `<span>${themes[currentThemeIdx].name}</span>`;
+      playHoloBeep(920, 0.08);
+    }
+
+    // =========================================================
+    // RADAR SCANNER
+    // =========================================================
+    let isScanning = false;
+    function triggerRadarScan() {
+      const scanLine = document.getElementById('radarScanLine');
+      const btn = document.getElementById('btnRadarScan');
+      
+      scanLine.classList.remove('scanning');
+      void scanLine.offsetWidth; // trigger reflow
+      scanLine.classList.add('scanning');
+      btn.classList.add('active');
+      playHoloBeep(350, 0.2);
+
+      setTimeout(() => {
+        scanLine.classList.remove('scanning');
+        btn.classList.remove('active');
+      }, 3500);
+    }
+
+    // =========================================================
+    // KEYBOARD SHORTCUTS
+    // =========================================================
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        triggerRadarScan();
+      } else if (e.key === 'd' || e.key === 'D') {
+        scrollToDashboard();
+      } else if (e.key === 'c' || e.key === 'C') {
+        openAiFlyout();
+      } else if (e.key === 'Escape') {
+        closeAiFlyout();
+      }
+    });
+
+    // =========================================================
+    // AI COPILOT MODAL & CHAT
+    // =========================================================
+    function openAiFlyout(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('modalBackdrop').classList.add('open');
+      document.getElementById('aiFlyoutModal').classList.add('open');
+      playHoloBeep(840, 0.08);
+      setTimeout(() => document.getElementById('modalChatInput').focus(), 150);
+    }
+
+    function closeAiFlyout() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      document.getElementById('aiFlyoutModal').classList.remove('open');
+    }
+
+    function quickPrompt(text) {
+      document.getElementById('modalChatInput').value = text;
+      sendModalChat();
+    }
+
+    function sendModalChat() {
+      const input = document.getElementById('modalChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const feed = document.getElementById('modalChatFeed');
+      appendChatBubble(feed, 'You: ' + text, false);
+      input.value = '';
+      playHoloBeep(640, 0.05);
+
+      setTimeout(() => {
+        let reply = "Based on your academic profile, your cumulative CGPA is currently 8.92 with 92.4% overall attendance. All 5 departments are running normally.";
+        const low = text.toLowerCase();
+        if (low.includes('attendance')) {
+          reply = "Official attendance policy requires 75.0% aggregate attendance across all courses. 14 students are currently monitored under the early-warning protocol.";
+        } else if (low.includes('cgpa') || low.includes('grade')) {
+          reply = "To achieve Dean's List honors (CGPA >= 9.0), you need an A grade in CS601 (Deep Neural Systems) and an A- in CS602 (Distributed Systems).";
+        } else if (low.includes('deadline') || low.includes('assignment')) {
+          reply = "Next coursework deadline: Transformer Architecture Implementation (CS601) due October 28, 2026. Status: Ready for final commit.";
+        }
+        appendChatBubble(feed, 'SmartCampus AI: ' + reply, true);
+        playHoloBeep(980, 0.06);
+      }, 350);
+    }
+
+    function appendChatBubble(feed, text, isAi) {
+      const div = document.createElement('div');
+      div.className = 'chat-bubble';
+      if (!isAi) {
+        div.style.background = 'rgba(6, 182, 212, 0.18)';
+        div.style.color = '#cffafe';
+      }
+      div.innerHTML = text.replace(/\\n/g, '<br>');
+      feed.appendChild(div);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function scrollToDashboard() {
+      const el = document.getElementById('dashboard');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openFullApp() {
+      window.location.href = 'http://localhost:3000';
+    }
+
+    function openModule(moduleName, e) {
+      if (e) e.stopPropagation();
+      playHoloBeep(700, 0.06);
+    }
+
+    // =========================================================
+    // PARTICLE CANVAS ANIMATION
+    // =========================================================
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.floor(window.innerWidth / 35);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 2.2 + 0.8,
+          speedY: -(Math.random() * 0.45 + 0.15),
+          speedX: (Math.random() - 0.5) * 0.25,
+          opacity: Math.random() * 0.7 + 0.2,
+          color: Math.random() > 0.5 ? '#8b5cf6' : '#06b6d4'
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fill();
+
+        p.y += p.speedY;
+        p.x += p.speedX;
+
+        if (p.y < 0) {
+          p.y = canvas.height;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    // Check hash on load
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hash === '#ai') {
+        setTimeout(openAiFlyout, 400);
+      } else if (window.location.hash === '#scan') {
+        setTimeout(triggerRadarScan, 500);
+      }
+    });
+
+    // In-page chat helper
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const feed = document.getElementById('chatFeed');
+      appendChatBubble(feed, "You: " + text, false);
+      input.value = '';
+
+      setTimeout(() => {
+        let reply = "Based on your academic profile, your cumulative CGPA is currently 8.92 with 92.4% overall attendance. All 5 departments are running normally.";
+        if (text.toLowerCase().includes('attendance')) {
+          reply = "Official attendance policy requires 75.0% aggregate attendance across all courses. 14 students are currently monitored under the early-warning protocol.";
+        }
+        appendChatBubble(feed, "SmartCampus AI: " + reply, true);
+      }, 300);
+    }
+  </script>
+</body>
+</html>
